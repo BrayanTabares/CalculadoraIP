@@ -89,6 +89,15 @@ public class CalculadoraIP {
 		host.add(tope);
 		return host;
 	}
+	
+	public static Tipo identificarTipo (Direccion ip,int mask) {
+		if(hallarRed(ip, mask).equals(ip)) {
+			return Tipo.RED;
+		}else if(hallarBroadcast(ip, mask).equals(ip)) {
+			return Tipo.BROADCAST;
+		}
+		return Tipo.HOST;
+	}
 
 	public static void main(String[] args) {
 		Direccion bin1 = new Direccion(192, 168, 0, 1);
@@ -115,7 +124,7 @@ public class CalculadoraIP {
 //		}
 		
 		for (Direccion aux : host) {
-			System.out.println(aux.getCadenaBinario() + " " + aux.getCadenaDecimal());
+			System.out.println(aux.getCadenaBinario() + " " + aux.getCadenaDecimal()+ " "+ identificarTipo(aux, mask));
 		}
 
 	}
