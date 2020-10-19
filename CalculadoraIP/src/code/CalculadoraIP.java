@@ -52,16 +52,7 @@ public class CalculadoraIP {
 		return bin;
 	}
 
-	public static int obtenerDecimal(ArrayList<Integer> binario) {
-		int numero = 0;
-		for (int i = 0; i < binario.size(); i++) {
-			if (binario.get(7 - i).equals(1)) {
-				numero += Math.pow(2, i);
-			}
-		}
-		return numero;
-	}
-
+	
 	public static ArrayList<Integer> obtenerDireccionDecimal(ArrayList<Integer> binario) {
 		ArrayList<Integer> dec = new ArrayList<Integer>();
 		int limite = binario.size() / 8;
@@ -77,6 +68,17 @@ public class CalculadoraIP {
 		}
 		return dec;
 	}
+	
+	public static int obtenerDecimal(ArrayList<Integer> binario) {
+		int numero = 0;
+		for (int i = 0; i < binario.size(); i++) {
+			if (binario.get(7 - i).equals(1)) {
+				numero += Math.pow(2, i);
+			}
+		}
+		return numero;
+	}
+
 
 	public static ArrayList<Integer> operacionAND(ArrayList<Integer> binario1, ArrayList<Integer> binario2) {
 		ArrayList<Integer> and = new ArrayList<Integer>();
