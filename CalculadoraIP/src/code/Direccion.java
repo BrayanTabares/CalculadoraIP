@@ -11,44 +11,36 @@ import java.util.ArrayList;
  */
 public class Direccion {
 
-	ArrayList<Integer> decimal;
-	ArrayList<Integer> binario;
-	ArrayList<Integer> mascara;
-	int mask;
-	Tipo tipo;
+	private ArrayList<Integer> decimal;
+	private ArrayList<Integer> binario;
+	private int numero;
+	String cadenaBinario;
+	String cadenaDecimal;
 
 	/**
 	 * @param direccion
-	 * @param mascara
 	 * @param decimal
 	 */
-	public Direccion(ArrayList<Integer> direccion, ArrayList<Integer> mascara, boolean decimal) {
+	public Direccion(ArrayList<Integer> direccion, boolean decimal) {
 		super();
 		if (decimal) {
 			this.decimal = direccion;
-			this.mascara = mascara;
 			this.binario = obtenerDireccionBinaria(direccion);
 		} else {
 			this.binario = direccion;
-			this.mascara = mascara;
 			this.decimal = obtenerDireccionDecimal(direccion);
 		}
 	}
-	
+
 	/**
 	 * @param direccion
-	 * @param mascara
 	 * @param decimal
 	 */
-	public Direccion(ArrayList<Integer> direccion, int mascara, boolean decimal) {
+	public Direccion(int mascara) {
 		super();
-		if (decimal) {
-			this.decimal = direccion;
-			this.mask = mascara;
-		} else {
-			this.binario = direccion;
-			this.mask = mascara;
-		}
+		this.numero=numero;
+		this.binario = CalculadoraIP.obtenerMascara(mascara);
+		this.decimal = obtenerDireccionDecimal(binario);
 	}
 
 	/**
@@ -56,22 +48,9 @@ public class Direccion {
 	 * @param mascara
 	 * @param decimal
 	 */
-	public Direccion(int primero, int segundo, int tercero, int cuarto, ArrayList<Integer> mascara) {
+	public Direccion(int primero, int segundo, int tercero, int cuarto) {
 		super();
 		this.decimal = obtenerDireccionDecimal(primero, segundo, tercero, cuarto);
-		this.mascara = mascara;
-		this.binario = obtenerDireccionBinaria(primero, segundo, tercero, cuarto);
-	}
-	
-	/**
-	 * @param direccion
-	 * @param mascara
-	 * @param decimal
-	 */
-	public Direccion(int primero, int segundo, int tercero, int cuarto, int mascara) {
-		super();
-		this.decimal = obtenerDireccionDecimal(primero, segundo, tercero, cuarto);
-		this.mask = mascara;
 		this.binario = obtenerDireccionBinaria(primero, segundo, tercero, cuarto);
 	}
 
@@ -83,67 +62,90 @@ public class Direccion {
 	}
 
 	/**
-	 * @param decimal the decimal to set
-	 */
-	public void setDecimal(ArrayList<Integer> decimal) {
-		this.decimal = decimal;
-	}
-
-	/**
 	 * @return the binario
 	 */
 	public ArrayList<Integer> getBinario() {
 		return binario;
 	}
 
-	/**
-	 * @param binario the binario to set
-	 */
-	public void setBinario(ArrayList<Integer> binario) {
-		this.binario = binario;
-	}
-
-	/**
-	 * @return the mascara
-	 */
-	public ArrayList<Integer> getMascara() {
-		return mascara;
-	}
-
-	/**
-	 * @param mascara the mascara to set
-	 */
-	public void setMascara(ArrayList<Integer> mascara) {
-		this.mascara = mascara;
-	}
-
-	/**
-	 * @return the mask
-	 */
-	public int getMask() {
-		return mask;
-	}
-
-	/**
-	 * @param mask the mask to set
-	 */
-	public void setMask(int mask) {
-		this.mask = mask;
-	}
-
-	/**
-	 * @return the tipo
-	 */
-	public Tipo getTipo() {
-		return tipo;
-	}
 	
-	public ArrayList<Integer> obtenerDireccionBinariaSiguiente() {
+	/**
+	 * @return the numero
+	 */
+	public int getNumero() {
+		return numero;
+	}
+
+	/**
+	 * @return the cadenaBinario
+	 */
+	public String getCadenaBinario() {
+		actualizarString();
+		return cadenaBinario;
+	}
+
+	/**
+	 * @return the cadenaDecimal
+	 */
+	public String getCadenaDecimal() {
+		actualizarString();
+		return cadenaDecimal;
+	}
+
+	public Direccion obtenerDireccionBinariaSiguiente() {
 		return obtenerDireccionBinariaSiguiente(binario);
 	}
 
-	public ArrayList<Integer> obtenerDireccionDecimalSiguiente() {
+	public Direccion obtenerDireccionDecimalSiguiente() {
 		return obtenerDireccionDecimalSiguiente(decimal);
+	}
+
+	public void actualizarString() {
+		String aux1 = decimal.toString().replace("[", "");
+		aux1 = aux1.replace("]", "");
+		cadenaDecimal = aux1.replace(", ", ".");
+
+		ArrayList<Integer> aux = new ArrayList<Integer>(binario);
+		for (int i = 8; i < binario.size(); i += 8) {
+			aux.add(i, -1);
+			i++;
+		}
+		aux1 = aux.toString().replace("[", "");
+		aux1 = aux1.replace("]", "");
+		aux1 = aux1.replace(", ", "");
+		cadenaBinario = aux1.replace("-1", "-");
+	}
+	
+
+	@Override
+	public String toString() {
+		actualizarString();
+		return cadenaDecimal;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((decimal == null) ? 0 : decimal.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Direccion other = (Direccion) obj;
+		if (decimal == null) {
+			if (other.decimal != null)
+				return false;
+		} else if (!decimal.equals(other.decimal))
+			return false;
+		return true;
 	}
 
 	private ArrayList<Integer> obtenerBinarioOcteto(double numero) {
@@ -168,7 +170,7 @@ public class Direccion {
 		}
 		return bin;
 	}
-	
+
 	private ArrayList<Integer> obtenerDireccionBinaria(int primero, int segundo, int tercero, int cuarto) {
 		ArrayList<Integer> bin = new ArrayList<Integer>();
 		bin.addAll(obtenerBinarioOcteto(primero));
@@ -186,6 +188,7 @@ public class Direccion {
 		bin.add(cuarto);
 		return bin;
 	}
+
 	
 	private ArrayList<Integer> obtenerDireccionDecimal(ArrayList<Integer> binario) {
 		ArrayList<Integer> dec = new ArrayList<Integer>();
@@ -212,39 +215,27 @@ public class Direccion {
 		}
 		return numero;
 	}
-	
-	private ArrayList<Integer> generarMascara(int numero) {
-		ArrayList<Integer> mask = new ArrayList<Integer>();
-		for (int i = 0; i < 32; i++) {
-			if (i < numero) {
-				mask.add(1);
-			} else {
-				mask.add(0);
-			}
-		}
-		return mask;
-	}
-	
-	private ArrayList<Integer> obtenerDireccionBinariaSiguiente(ArrayList<Integer> binario) {
+
+	private Direccion obtenerDireccionBinariaSiguiente(ArrayList<Integer> binario) {
 		ArrayList<Integer> dec = obtenerDireccionDecimal(binario);
 		if (dec.size() == 4) {
 			int num = dec.get(3);
 			if (num < 255) {
 				dec.set(3, ++num);
-				return obtenerDireccionBinaria(dec);
+				return new Direccion(obtenerDireccionBinaria(dec),false);
 			} else {
 				num = dec.get(2);
 				if (num < 255) {
 					dec.set(2, ++num);
 					dec.set(3, 0);
-					return obtenerDireccionBinaria(dec);
+					return new Direccion(obtenerDireccionBinaria(dec),false);
 				} else {
 					num = dec.get(1);
 					if (num < 255) {
 						dec.set(1, ++num);
 						dec.set(2, 0);
 						dec.set(3, 0);
-						return obtenerDireccionBinaria(dec);
+						return new Direccion(obtenerDireccionBinaria(dec),false);
 					} else {
 						num = dec.get(0);
 						if (num < 255) {
@@ -252,7 +243,7 @@ public class Direccion {
 							dec.set(1, 0);
 							dec.set(2, 0);
 							dec.set(3, 0);
-							return obtenerDireccionBinaria(dec);
+							return new Direccion(obtenerDireccionBinaria(dec),false);
 						}
 					}
 				}
@@ -261,26 +252,26 @@ public class Direccion {
 		return null;
 	}
 	
-	private ArrayList<Integer> obtenerDireccionDecimalSiguiente(ArrayList<Integer> decimal) {
+	private Direccion obtenerDireccionDecimalSiguiente(ArrayList<Integer> decimal) {
 		ArrayList<Integer> dec = decimal;
 		if (dec.size() == 4) {
 			int num = dec.get(3);
 			if (num < 255) {
 				dec.set(3, ++num);
-				return dec;
+				return new Direccion(dec,true);
 			} else {
 				num = dec.get(2);
 				if (num < 255) {
 					dec.set(2, ++num);
 					dec.set(3, 0);
-					return dec;
+					return new Direccion(dec,true);
 				} else {
 					num = dec.get(1);
 					if (num < 255) {
 						dec.set(1, ++num);
 						dec.set(2, 0);
 						dec.set(3, 0);
-						return dec;
+						return new Direccion(dec,true);
 					} else {
 						num = dec.get(0);
 						if (num < 255) {
@@ -288,7 +279,7 @@ public class Direccion {
 							dec.set(1, 0);
 							dec.set(2, 0);
 							dec.set(3, 0);
-							return dec;
+							return new Direccion(dec,true);
 						}
 					}
 				}
@@ -297,5 +288,4 @@ public class Direccion {
 		return null;
 	}
 
-	
 }
