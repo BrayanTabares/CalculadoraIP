@@ -38,7 +38,7 @@ public class Direccion {
 	 */
 	public Direccion(int mascara) {
 		super();
-		this.numero=numero;
+		this.numero = mascara;
 		this.binario = CalculadoraIP.obtenerMascara(mascara);
 		this.decimal = obtenerDireccionDecimal(binario);
 	}
@@ -68,7 +68,6 @@ public class Direccion {
 		return binario;
 	}
 
-	
 	/**
 	 * @return the numero
 	 */
@@ -92,18 +91,41 @@ public class Direccion {
 		return cadenaDecimal;
 	}
 
+	/**
+	 * Metodo para obtener la direccion siguiente a partir de la direccion binaria,
+	 * es igual al metodo de obtenerDireccionDecimalSiguiente
+	 * 
+	 * @return
+	 */
 	public Direccion obtenerDireccionBinariaSiguiente() {
 		return obtenerDireccionBinariaSiguiente(binario);
 	}
 
+	/**
+	 * Metodo para obtener la direccion siguiente a partir de la direccion decimal,
+	 * es igual al metodo de obtenerDireccionBinariaSiguiente
+	 * 
+	 * @return
+	 */
 	public Direccion obtenerDireccionDecimalSiguiente() {
 		return obtenerDireccionDecimalSiguiente(decimal);
 	}
 
+	/**
+	 * Metodo para obtener una direccion siguiente recortando en un punto
+	 * especifico, este metodo se usa en el obtener subredes, para obtener la
+	 * direccion broadcast de la siguiente subred
+	 * 
+	 * @param mascara
+	 * @return
+	 */
 	public Direccion obtenerDireccionBinariaSiguiente(int mascara) {
-		return obtenerDireccionBinariaSiguiente(binario,mascara);
+		return obtenerDireccionBinariaSiguiente(binario, mascara);
 	}
-	
+
+	/**
+	 * Metodo para actualizar los strings de acuerdo a cada direccion
+	 */
 	public void actualizarString() {
 		String aux1 = decimal.toString().replace("[", "");
 		aux1 = aux1.replace("]", "");
@@ -119,7 +141,6 @@ public class Direccion {
 		aux1 = aux1.replace(", ", "");
 		cadenaBinario = aux1.replace("-1", "-");
 	}
-	
 
 	@Override
 	public String toString() {
@@ -166,7 +187,7 @@ public class Direccion {
 		}
 		return binario;
 	}
-	
+
 	private ArrayList<Integer> obtenerBinario(double numero, int length) {
 		ArrayList<Integer> binario = new ArrayList<Integer>();
 		int resto;
@@ -181,7 +202,6 @@ public class Direccion {
 		}
 		return binario;
 	}
-
 
 	private ArrayList<Integer> obtenerDireccionBinaria(ArrayList<Integer> direccionDecimal) {
 		ArrayList<Integer> bin = new ArrayList<Integer>();
@@ -209,7 +229,6 @@ public class Direccion {
 		return bin;
 	}
 
-	
 	private ArrayList<Integer> obtenerDireccionDecimal(ArrayList<Integer> binario) {
 		ArrayList<Integer> dec = new ArrayList<Integer>();
 		int limite = binario.size() / 8;
@@ -225,11 +244,11 @@ public class Direccion {
 		}
 		return dec;
 	}
-	
+
 	private int obtenerDecimal(ArrayList<Integer> binario) {
 		int numero = 0;
 		for (int i = 0; i < binario.size(); i++) {
-			if (binario.get(binario.size()-1-i).equals(1)) {
+			if (binario.get(binario.size() - 1 - i).equals(1)) {
 				numero += Math.pow(2, i);
 			}
 		}
@@ -242,20 +261,20 @@ public class Direccion {
 			int num = dec.get(3);
 			if (num < 255) {
 				dec.set(3, ++num);
-				return new Direccion(obtenerDireccionBinaria(dec),false);
+				return new Direccion(obtenerDireccionBinaria(dec), false);
 			} else {
 				num = dec.get(2);
 				if (num < 255) {
 					dec.set(2, ++num);
 					dec.set(3, 0);
-					return new Direccion(obtenerDireccionBinaria(dec),false);
+					return new Direccion(obtenerDireccionBinaria(dec), false);
 				} else {
 					num = dec.get(1);
 					if (num < 255) {
 						dec.set(1, ++num);
 						dec.set(2, 0);
 						dec.set(3, 0);
-						return new Direccion(obtenerDireccionBinaria(dec),false);
+						return new Direccion(obtenerDireccionBinaria(dec), false);
 					} else {
 						num = dec.get(0);
 						if (num < 255) {
@@ -263,7 +282,7 @@ public class Direccion {
 							dec.set(1, 0);
 							dec.set(2, 0);
 							dec.set(3, 0);
-							return new Direccion(obtenerDireccionBinaria(dec),false);
+							return new Direccion(obtenerDireccionBinaria(dec), false);
 						}
 					}
 				}
@@ -271,27 +290,27 @@ public class Direccion {
 		}
 		return null;
 	}
-	
+
 	private Direccion obtenerDireccionDecimalSiguiente(ArrayList<Integer> decimal) {
 		ArrayList<Integer> dec = decimal;
 		if (dec.size() == 4) {
 			int num = dec.get(3);
 			if (num < 255) {
 				dec.set(3, ++num);
-				return new Direccion(dec,true);
+				return new Direccion(dec, true);
 			} else {
 				num = dec.get(2);
 				if (num < 255) {
 					dec.set(2, ++num);
 					dec.set(3, 0);
-					return new Direccion(dec,true);
+					return new Direccion(dec, true);
 				} else {
 					num = dec.get(1);
 					if (num < 255) {
 						dec.set(1, ++num);
 						dec.set(2, 0);
 						dec.set(3, 0);
-						return new Direccion(dec,true);
+						return new Direccion(dec, true);
 					} else {
 						num = dec.get(0);
 						if (num < 255) {
@@ -299,7 +318,7 @@ public class Direccion {
 							dec.set(1, 0);
 							dec.set(2, 0);
 							dec.set(3, 0);
-							return new Direccion(dec,true);
+							return new Direccion(dec, true);
 						}
 					}
 				}
@@ -307,15 +326,15 @@ public class Direccion {
 		}
 		return null;
 	}
-	
+
 	private Direccion obtenerDireccionBinariaSiguiente(ArrayList<Integer> binario, int mascara) {
 		ArrayList<Integer> dec = new ArrayList<Integer>(binario.subList(0, mascara));
-		int aux=obtenerDecimal(dec);
-		dec=obtenerBinario(++aux, dec.size());
-		for(int i=dec.size();i<=32;i++) {
+		int aux = obtenerDecimal(dec);
+		dec = obtenerBinario(++aux, dec.size());
+		for (int i = dec.size(); i <= 32; i++) {
 			dec.add(0);
 		}
-		return new Direccion(dec,false);
+		return new Direccion(dec, false);
 	}
 
 }
