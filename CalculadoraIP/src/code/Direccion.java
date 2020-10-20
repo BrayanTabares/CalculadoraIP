@@ -4,6 +4,7 @@
 package code;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * @author Brayan-PC
@@ -37,7 +38,6 @@ public class Direccion {
 	 * @param decimal
 	 */
 	public Direccion(int mascara) {
-		super();
 		this.numero = mascara;
 		this.binario = CalculadoraIP.obtenerMascara(mascara);
 		this.decimal = obtenerDireccionDecimal(binario);
@@ -50,7 +50,7 @@ public class Direccion {
 	 */
 	public Direccion(int primero, int segundo, int tercero, int cuarto) {
 		super();
-		this.decimal = obtenerDireccionDecimal(primero, segundo, tercero, cuarto);
+		this.decimal = new ArrayList<Integer>(Arrays.asList(primero, segundo, tercero, cuarto));
 		this.binario = obtenerDireccionBinaria(primero, segundo, tercero, cuarto);
 	}
 
@@ -190,7 +190,7 @@ public class Direccion {
 
 	/**
 	 * Metodo para obtener el binario de un numero cualquiera, este permite
-	 * establecer un tamaño total (cantidad de ceros a la izquierda) con el
+	 * establecer un tamaï¿½o total (cantidad de ceros a la izquierda) con el
 	 * parametro lenght
 	 * 
 	 * @param numero
@@ -242,24 +242,6 @@ public class Direccion {
 		bin.addAll(obtenerBinarioOcteto(segundo));
 		bin.addAll(obtenerBinarioOcteto(tercero));
 		bin.addAll(obtenerBinarioOcteto(cuarto));
-		return bin;
-	}
-
-	/**
-	 * Metodo para obtener la direccion decimal en un array
-	 * 
-	 * @param primero
-	 * @param segundo
-	 * @param tercero
-	 * @param cuarto
-	 * @return
-	 */
-	private ArrayList<Integer> obtenerDireccionDecimal(int primero, int segundo, int tercero, int cuarto) {
-		ArrayList<Integer> bin = new ArrayList<Integer>();
-		bin.add(primero);
-		bin.add(segundo);
-		bin.add(tercero);
-		bin.add(cuarto);
 		return bin;
 	}
 
