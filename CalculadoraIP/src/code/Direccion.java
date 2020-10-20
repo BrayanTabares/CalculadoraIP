@@ -188,6 +188,15 @@ public class Direccion {
 		return binario;
 	}
 
+	/**
+	 * Metodo para obtener el binario de un numero cualquiera, este permite
+	 * establecer un tamaño total (cantidad de ceros a la izquierda) con el
+	 * parametro lenght
+	 * 
+	 * @param numero
+	 * @param length
+	 * @return
+	 */
 	private ArrayList<Integer> obtenerBinario(double numero, int length) {
 		ArrayList<Integer> binario = new ArrayList<Integer>();
 		int resto;
@@ -203,6 +212,12 @@ public class Direccion {
 		return binario;
 	}
 
+	/**
+	 * Metodo para obtener la direccion binaria a partir de una direccion decimal
+	 * 
+	 * @param direccionDecimal
+	 * @return
+	 */
 	private ArrayList<Integer> obtenerDireccionBinaria(ArrayList<Integer> direccionDecimal) {
 		ArrayList<Integer> bin = new ArrayList<Integer>();
 		for (int dec : direccionDecimal) {
@@ -211,6 +226,16 @@ public class Direccion {
 		return bin;
 	}
 
+	/**
+	 * Metodo para obtener una direccion binaria a partir de parametros de una
+	 * direccion decimal
+	 * 
+	 * @param primero
+	 * @param segundo
+	 * @param tercero
+	 * @param cuarto
+	 * @return
+	 */
 	private ArrayList<Integer> obtenerDireccionBinaria(int primero, int segundo, int tercero, int cuarto) {
 		ArrayList<Integer> bin = new ArrayList<Integer>();
 		bin.addAll(obtenerBinarioOcteto(primero));
@@ -220,6 +245,15 @@ public class Direccion {
 		return bin;
 	}
 
+	/**
+	 * Metodo para obtener la direccion decimal en un array
+	 * 
+	 * @param primero
+	 * @param segundo
+	 * @param tercero
+	 * @param cuarto
+	 * @return
+	 */
 	private ArrayList<Integer> obtenerDireccionDecimal(int primero, int segundo, int tercero, int cuarto) {
 		ArrayList<Integer> bin = new ArrayList<Integer>();
 		bin.add(primero);
@@ -229,6 +263,13 @@ public class Direccion {
 		return bin;
 	}
 
+	/**
+	 * Metodo para obtener la direccion decimal a partir de un array de direccion
+	 * binaria
+	 * 
+	 * @param binario
+	 * @return
+	 */
 	private ArrayList<Integer> obtenerDireccionDecimal(ArrayList<Integer> binario) {
 		ArrayList<Integer> dec = new ArrayList<Integer>();
 		int limite = binario.size() / 8;
@@ -245,6 +286,12 @@ public class Direccion {
 		return dec;
 	}
 
+	/**
+	 * Metodo para obtener el numero decimal de un numero binario
+	 * 
+	 * @param binario
+	 * @return
+	 */
 	private int obtenerDecimal(ArrayList<Integer> binario) {
 		int numero = 0;
 		for (int i = 0; i < binario.size(); i++) {
@@ -255,6 +302,13 @@ public class Direccion {
 		return numero;
 	}
 
+	/**
+	 * Metodo para obtener la direccion siguiente a partir de la direccion binaria,
+	 * es igual al metodo de obtenerDireccionDecimalSiguiente
+	 * 
+	 * @param binario
+	 * @return
+	 */
 	private Direccion obtenerDireccionBinariaSiguiente(ArrayList<Integer> binario) {
 		ArrayList<Integer> dec = obtenerDireccionDecimal(binario);
 		if (dec.size() == 4) {
@@ -291,6 +345,13 @@ public class Direccion {
 		return null;
 	}
 
+	/**
+	 * Metodo para obtener la direccion siguiente a partir de la direccion decimal,
+	 * es igual al metodo de obtenerDireccionBinariaSiguiente
+	 * 
+	 * @param decimal
+	 * @return
+	 */
 	private Direccion obtenerDireccionDecimalSiguiente(ArrayList<Integer> decimal) {
 		ArrayList<Integer> dec = decimal;
 		if (dec.size() == 4) {
@@ -327,6 +388,15 @@ public class Direccion {
 		return null;
 	}
 
+	/**
+	 * Metodo para obtener una direccion siguiente recortando en un punto
+	 * especifico, este metodo se usa en el obtener subredes, para obtener la
+	 * direccion broadcast de la siguiente subred
+	 * 
+	 * @param binario
+	 * @param mascara
+	 * @return
+	 */
 	private Direccion obtenerDireccionBinariaSiguiente(ArrayList<Integer> binario, int mascara) {
 		ArrayList<Integer> dec = new ArrayList<Integer>(binario.subList(0, mascara));
 		int aux = obtenerDecimal(dec);
