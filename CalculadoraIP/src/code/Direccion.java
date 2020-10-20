@@ -175,16 +175,14 @@ public class Direccion {
 
 	private ArrayList<Integer> obtenerBinarioOcteto(double numero) {
 		ArrayList<Integer> binario = new ArrayList<Integer>();
-		int resto;
-		do {
-			resto = (int) (numero % 2);
-			numero = numero / 2;
-			binario.add(0, resto);
-		} while (numero >= 2);
-		binario.add(0, (int) numero);
-		for (int i = binario.size(); i < 8; i++) {
-			binario.add(0, 0);
+		String binarioS = Integer.toBinaryString((int)numero);
+		binarioS = String.format("%8s", binarioS).replaceAll(" ", "0");
+		char[] binarioC = binarioS.toCharArray();
+		
+		for (char i:binarioC) {
+			binario.add(Integer.parseInt(i+""));
 		}
+		
 		return binario;
 	}
 
