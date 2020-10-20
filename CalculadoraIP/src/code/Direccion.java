@@ -238,7 +238,7 @@ public class Direccion {
 	 */
 	private ArrayList<Integer> obtenerDireccionDecimal(ArrayList<Integer> binario) {
 		ArrayList<Integer> dec = new ArrayList<Integer>();
-		int limite = binario.size() / 8;
+		
 		for (int i = 0; i <= binario.size()-8; i+=8) {
 			String numeroS = binario.subList(i, i+8).toString().replace(",", "");
 			numeroS = numeroS.replace(" ", "");
@@ -257,12 +257,9 @@ public class Direccion {
 	 * @return
 	 */
 	private int obtenerDecimal(ArrayList<Integer> binario) {
-		int numero = 0;
-		for (int i = 0; i < binario.size(); i++) {
-			if (binario.get(binario.size() - 1 - i).equals(1)) {
-				numero += Math.pow(2, i);
-			}
-		}
+		String numeroS = binario.toString().replace(",", "");
+		numeroS = numeroS.replace(" ", "");
+		int numero = Integer.parseInt(numeroS.substring(1, numeroS.length()-1),2);
 		return numero;
 	}
 
