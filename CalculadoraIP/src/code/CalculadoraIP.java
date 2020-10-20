@@ -96,15 +96,14 @@ public class CalculadoraIP {
 		Direccion tope = hallarBroadcast(ip, mask);
 		int subred=(int) Math.ceil(Math.log10(num)/Math.log10(2));
 		if(subred<=32-mask) {
-			for(int i=1;i<=subred;i++) {
+			Direccion maskAux = new Direccion(mask);			
+			for(int i=0;i<Math.pow(2,subred);i++) {
 				ArrayList<Direccion> aux= new ArrayList<Direccion>();
-				Direccion maskAux = new Direccion(mask+i);
-				Direccion topeLocal = hallarBroadcast(actual, maskAux);
+				Direccion topeLocal = actual.obtenerDireccionBinariaSiguiente(mask+subred);
 				while (!actual.equals(topeLocal)) {
 					aux.add(actual);
 					actual = actual.obtenerDireccionBinariaSiguiente();
 				}
-				aux.add(topeLocal);
 				host.add(aux);
 			}
 		}
@@ -134,11 +133,11 @@ public class CalculadoraIP {
 		ArrayList<Direccion> host = hallarHost(bin2, mask);
 		
 		System.out.println("Ip  :" + bin2.getCadenaBinario() + " " + bin2);
-		System.out.println("Mask:" + mascara.getCadenaBinario() + " " + mascara);
+		System.out.println("\nMask:" + mascara.getCadenaBinario() + " " + mascara);
 
-		System.out.println("Red :" + red.getCadenaBinario() + " " + red);
-		System.out.println("Bro :" + broad.getCadenaBinario() + " " + broad);
-		System.out.println("Host");
+		System.out.println("\nRed :" + red.getCadenaBinario() + " " + red);
+		System.out.println("\nBro :" + broad.getCadenaBinario() + " " + broad);
+		System.out.println("\nHost");
 		
 //		for(int i=0;i<17;i++) {
 //			red=obtenerDireccionBinariaSiguiente(red);
@@ -148,11 +147,10 @@ public class CalculadoraIP {
 		for (Direccion aux : host) {
 			System.out.println(aux.getCadenaBinario() + " " + aux.getCadenaDecimal()+ " "+ identificarTipo(aux, mask));
 		}
-		System.out.println(Math.log10(10)/Math.log10(2));
-		System.out.println(Math.ceil(Math.log10(10)/Math.log10(2)));
-		System.out.println(" "+broad.getBinario().size());
-		System.out.println(broad.obtenerDireccionBinariaSiguiente(23).getCadenaBinario());
+		
+		System.out.println("\nSubredes :");
 		for (ArrayList<Direccion> aux1 : hallarSubred(bin2, 28, 4)) {
+			System.out.println("Subred");
 			for (Direccion aux : aux1) {
 				System.out.println(aux.getCadenaBinario() + " " + aux.getCadenaDecimal()+ " "+ identificarTipo(aux, mask));
 			}
