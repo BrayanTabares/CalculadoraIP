@@ -173,19 +173,6 @@ public class Direccion {
 		return true;
 	}
 
-	private ArrayList<Integer> obtenerBinarioOcteto(double numero) {
-		ArrayList<Integer> binario = new ArrayList<Integer>();
-		String binarioS = Integer.toBinaryString((int)numero);
-		binarioS = String.format("%8s", binarioS).replaceAll(" ", "0");
-		char[] binarioC = binarioS.toCharArray();
-		
-		for (char i:binarioC) {
-			binario.add(Integer.parseInt(i+""));
-		}
-		
-		return binario;
-	}
-
 	/**
 	 * Metodo para obtener el binario de un numero cualquiera, este permite
 	 * establecer un tama�o total (cantidad de ceros a la izquierda) con el
@@ -195,18 +182,17 @@ public class Direccion {
 	 * @param length
 	 * @return
 	 */
-	private ArrayList<Integer> obtenerBinario(double numero, int length) {
+	
+	private ArrayList<Integer> obtenerBinario(double numero, int ceros) {
+		
 		ArrayList<Integer> binario = new ArrayList<Integer>();
-		int resto;
-		do {
-			resto = (int) (numero % 2);
-			numero = numero / 2;
-			binario.add(0, resto);
-		} while (numero >= 2);
-		binario.add(0, (int) numero);
-		for (int i = binario.size(); i < length; i++) {
-			binario.add(0, 0);
-		}
+		String binarioS = Integer.toBinaryString((int)numero);
+		binarioS = String.format("%"+ceros+"s", binarioS).replaceAll(" ", "0");
+		char[] binarioC = binarioS.toCharArray();
+		
+		for (char i:binarioC) 
+			binario.add(Integer.parseInt(i+""));
+		
 		return binario;
 	}
 
@@ -219,7 +205,7 @@ public class Direccion {
 	private ArrayList<Integer> obtenerDireccionBinaria(ArrayList<Integer> direccionDecimal) {
 		ArrayList<Integer> bin = new ArrayList<Integer>();
 		for (int dec : direccionDecimal) {
-			bin.addAll(obtenerBinarioOcteto(dec));
+			bin.addAll(obtenerBinario(dec, 8));
 		}
 		return bin;
 	}
@@ -236,10 +222,10 @@ public class Direccion {
 	 */
 	private ArrayList<Integer> obtenerDireccionBinaria(int primero, int segundo, int tercero, int cuarto) {
 		ArrayList<Integer> bin = new ArrayList<Integer>();
-		bin.addAll(obtenerBinarioOcteto(primero));
-		bin.addAll(obtenerBinarioOcteto(segundo));
-		bin.addAll(obtenerBinarioOcteto(tercero));
-		bin.addAll(obtenerBinarioOcteto(cuarto));
+		bin.addAll(obtenerBinario(primero, 8));
+		bin.addAll(obtenerBinario(segundo, 8));
+		bin.addAll(obtenerBinario(tercero, 8));
+		bin.addAll(obtenerBinario(cuarto, 8));
 		return bin;
 	}
 
