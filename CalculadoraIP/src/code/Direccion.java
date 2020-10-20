@@ -176,10 +176,10 @@ public class Direccion {
 	/**
 	 * Metodo para obtener el binario de un numero cualquiera, este permite
 	 * establecer un tama�o total (cantidad de ceros a la izquierda) con el
-	 * parametro lenght
+	 * parametro ceros
 	 * 
 	 * @param numero
-	 * @param length
+	 * @param ceros
 	 * @return
 	 */
 	
@@ -239,16 +239,14 @@ public class Direccion {
 	private ArrayList<Integer> obtenerDireccionDecimal(ArrayList<Integer> binario) {
 		ArrayList<Integer> dec = new ArrayList<Integer>();
 		int limite = binario.size() / 8;
-		for (int i = 1; i <= limite; i++) {
-			int tope = 8 * i - 1;
-			int numero = 0;
-			for (int j = 0; j < 8; j++) {
-				if (binario.get(tope - j).equals(1)) {
-					numero += Math.pow(2, j);
-				}
-			}
+		for (int i = 0; i <= binario.size()-8; i+=8) {
+			String numeroS = binario.subList(i, i+8).toString().replace(",", "");
+			numeroS = numeroS.replace(" ", "");
+			int numero = Integer.parseInt(numeroS.substring(1, 9));
+			numero = Integer.parseInt(numero+"",2);
 			dec.add(numero);
 		}
+		
 		return dec;
 	}
 
