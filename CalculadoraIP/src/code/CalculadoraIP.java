@@ -11,8 +11,24 @@ import java.util.ArrayList;
  */
 public class CalculadoraIP {
 
+	
+	private Direccion red;
+	private Direccion broad;
+	private Direccion ip;
+	private Direccion mask;
+	private ArrayList<Direccion> host;
+	
+	public CalculadoraIP(Direccion ip, Direccion mask) {
+		this.ip = ip;
+		this.mask = mask;
+		red = hallarRed(ip, mask);
+		broad = hallarBroadcast(ip, mask.getNumero());
+		host = hallarHost(ip, mask.getNumero());
+	}
+	
+	
 	/**
-	 * Operación and entre dos direcciones binarias instanciadas en dos ArrayList
+	 * Operacion and entre dos direcciones binarias instanciadas en dos ArrayList
 	 * Integer
 	 * 
 	 * @param binario1
@@ -36,7 +52,7 @@ public class CalculadoraIP {
 	}
 
 	/**
-	 * Generar la mascara de red en un ArrayList, este metodo perdió su
+	 * Generar la mascara de red en un ArrayList, este metodo perdiï¿½ su
 	 * funcionalidad ya que la clase Direccion tambien lo tiene
 	 * 
 	 * @param numero
@@ -55,8 +71,8 @@ public class CalculadoraIP {
 	}
 
 	/**
-	 * Obtener el valor numerico de una mascara de red, este metodo perdió
-	 * funcionalidad ya que la clase Direccion también lo tiene
+	 * Obtener el valor numerico de una mascara de red, este metodo perdiï¿½
+	 * funcionalidad ya que la clase Direccion tambiï¿½n lo tiene
 	 * 
 	 * @param mascara
 	 * @return
@@ -127,7 +143,7 @@ public class CalculadoraIP {
 
 	/**
 	 * Metodo para hallar los host de una red, tomando cualquier direccion ip y una
-	 * mascara de red generada automaticamente de un valor numérico
+	 * mascara de red generada automaticamente de un valor numï¿½rico
 	 * 
 	 * @param ip
 	 * @param mask
@@ -194,28 +210,29 @@ public class CalculadoraIP {
 		return Tipo.HOST;
 	}
 
-	public static void main(String[] args) {
+
+	
+	
+public static void main(String[] args) {
 		
 		/**
 		 * ip
 		 */
-		Direccion bin2 = new Direccion(192, 168, 70, 192);
-		Direccion mask1 = new Direccion(255, 255, 255, 248);
+		Direccion bin2 = new Direccion(172, 23, 96, 0);
 		/**
 		 * Macara
 		 */
-		int mask = 29;
-		//int mask=mask1.
+		int mask = 21;
 		
 		/**
 		 * Cantidad de bits que usa la subred
 		 */
-		int bits=7;
+		int bits=8;
 		
 		/**
 		 * Imprimir la subred
 		 */
-		int max = 105;
+		int max = 177;
 		
 		Direccion mascara = new Direccion(mask);
 		Direccion red = hallarRed(bin2, mask);
@@ -243,13 +260,11 @@ public class CalculadoraIP {
 		int i=1;
 		for (ArrayList<Direccion> aux1 : hallarSubred(bin2, mask, (int)Math.pow(2, bits))) {
 			System.out.println("Subred "+i);
-			int j=1;
 			for (Direccion aux : aux1) {
 				if(i==max) {
-					System.out.println(j+". "+
+					System.out.println(
 							aux.getCadenaBinario() + " " + aux.getCadenaDecimal() + " " + identificarTipo(aux, mask));
 				}
-				j++;
 				
 			}
 			i++;
@@ -257,3 +272,4 @@ public class CalculadoraIP {
 	}
 
 }
+
