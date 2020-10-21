@@ -195,12 +195,28 @@ public class CalculadoraIP {
 	}
 
 	public static void main(String[] args) {
-		Direccion bin1 = new Direccion(192, 168, 0, 1);
-		Direccion bin2 = new Direccion(192, 168, 2, 3);
-		System.out.println(bin1);
-		System.out.println(bin2);
-
-		int mask = 28;
+		
+		/**
+		 * ip
+		 */
+		Direccion bin2 = new Direccion(192, 168, 70, 192);
+		Direccion mask1 = new Direccion(255, 255, 255, 248);
+		/**
+		 * Macara
+		 */
+		int mask = 29;
+		//int mask=mask1.
+		
+		/**
+		 * Cantidad de bits que usa la subred
+		 */
+		int bits=7;
+		
+		/**
+		 * Imprimir la subred
+		 */
+		int max = 105;
+		
 		Direccion mascara = new Direccion(mask);
 		Direccion red = hallarRed(bin2, mask);
 		Direccion broad = hallarBroadcast(bin2, mask);
@@ -224,12 +240,19 @@ public class CalculadoraIP {
 		}
 
 		System.out.println("\nSubredes :");
-		for (ArrayList<Direccion> aux1 : hallarSubred(bin2, 28, 4)) {
-			System.out.println("Subred");
+		int i=1;
+		for (ArrayList<Direccion> aux1 : hallarSubred(bin2, mask, (int)Math.pow(2, bits))) {
+			System.out.println("Subred "+i);
+			int j=1;
 			for (Direccion aux : aux1) {
-				System.out.println(
-						aux.getCadenaBinario() + " " + aux.getCadenaDecimal() + " " + identificarTipo(aux, mask));
+				if(i==max) {
+					System.out.println(j+". "+
+							aux.getCadenaBinario() + " " + aux.getCadenaDecimal() + " " + identificarTipo(aux, mask));
+				}
+				j++;
+				
 			}
+			i++;
 		}
 	}
 
