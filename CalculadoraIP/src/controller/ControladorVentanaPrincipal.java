@@ -1,6 +1,5 @@
 package controller;
 
-import java.awt.Checkbox;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -17,9 +16,11 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.TextFormatter.Change;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.converter.IntegerStringConverter;
@@ -31,17 +32,20 @@ public class ControladorVentanaPrincipal implements Initializable {
 	private Button btnCalcular;
 
 	@FXML
-	private java.awt.TextField ipPrimer, ipSegundo, ipTercero, ipCuarto, maskPrimer, maskSegundo, maskTercero, maskCuarto,
+	private TextField ipPrimer, ipSegundo, ipTercero, ipCuarto, maskPrimer, maskSegundo, maskTercero, maskCuarto,
 			numMascara, numBits, numSubredes, redPrimer, redSegundo, redTercero, redCuarto, broadPrimer, broadSegundo,
 			broadTercero, broadCuarto, buscarPrimer, buscarSegundo, buscarTercero, buscarCuarto, numBitsRed,
 			numBitsHost, numDireccionesHost, numBuscarSubred, numBuscarHost;
 
 	@FXML
-	private Checkbox checkSubredes, checkNumBits, checkNumSubredes, checkBuscarDireccion, checkBuscarSubred,
+	private CheckBox checkSubredes, checkNumBits, checkNumSubredes, checkBuscarDireccion, checkBuscarSubred,
 			checkBuscarNumSubred, checkBuscarNumHost;
 
 	@FXML
     private TableColumn<TablaDirecciones, String> subred,direccion,tipo,usable;
+	
+    @FXML
+    private TableView<TablaDirecciones> tablaBusqueda;
 	
 	private ObservableList<TablaDirecciones> arrayTabla= FXCollections.observableArrayList();
 	private ObservableList<TablaDirecciones> arrayTablaBusqueda= FXCollections.observableArrayList();
@@ -118,23 +122,6 @@ public class ControladorVentanaPrincipal implements Initializable {
 		ipCuarto.addEventFilter(KeyEvent.ANY, event -> {
 			eventoTextField(ipCuarto, 255, 0, event);
 		});
-		
-		buscarPrimer.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0, integerFilter));
-		buscarPrimer.addEventFilter(KeyEvent.ANY, event -> {
-			eventoTextField(buscarPrimer, 255, 0, event);
-		});
-		buscarSegundo.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0, integerFilter));
-		buscarSegundo.addEventFilter(KeyEvent.ANY, event -> {
-			eventoTextField(buscarSegundo, 255, 0, event);
-		});
-		buscarTercero.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0, integerFilter));
-		buscarTercero.addEventFilter(KeyEvent.ANY, event -> {
-			eventoTextField(buscarTercero, 255, 0, event);
-		});
-		buscarCuarto.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0, integerFilter));
-		buscarCuarto.addEventFilter(KeyEvent.ANY, event -> {
-			eventoTextField(buscarCuarto, 255, 0, event);
-		});
 
 		UnaryOperator<Change> integerFilterMask = change -> {
 			String newText = change.getControlNewText();
@@ -186,11 +173,36 @@ public class ControladorVentanaPrincipal implements Initializable {
 		checkBuscarNumSubred.setSelected(true);
 		switchBuscar1(null);
 		
+		buscarPrimer.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0, integerFilter));
+		buscarPrimer.addEventFilter(KeyEvent.ANY, event -> {
+			eventoTextField(buscarPrimer, 255, 0, event);
+		});
+		buscarSegundo.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0, integerFilter));
+		buscarSegundo.addEventFilter(KeyEvent.ANY, event -> {
+			eventoTextField(buscarSegundo, 255, 0, event);
+		});
+		buscarTercero.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0, integerFilter));
+		buscarTercero.addEventFilter(KeyEvent.ANY, event -> {
+			eventoTextField(buscarTercero, 255, 0, event);
+		});
+		buscarCuarto.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0, integerFilter));
+		buscarCuarto.addEventFilter(KeyEvent.ANY, event -> {
+			eventoTextField(buscarCuarto, 255, 0, event);
+		});
+		
+		subred.setCellValueFactory(new PropertyValueFactory<>("subred"));
+		direccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
+		tipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
+		usable.setCellValueFactory(new PropertyValueFactory<>("usable"));
+		
+		tablaBusqueda.setItems(arrayTabla);
+		
 	}
 
 	@FXML
 	void prueba(ActionEvent event) {
 		System.out.println("evento");
+
 	}
 
 	void eventoTextField(TextField text, int max, int min, KeyEvent event) {
@@ -256,6 +268,7 @@ public class ControladorVentanaPrincipal implements Initializable {
 		checkBuscarDireccion.setSelected(true);
 		checkBuscarNumHost.setDisable(true);
 		checkBuscarNumSubred.setDisable(true);
+		
 	}
 	
 	@FXML
