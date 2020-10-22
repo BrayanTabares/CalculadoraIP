@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 
+import code.CalculadoraIP;
 import code.Direccion;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -49,13 +50,67 @@ public class ControladorVentanaPrincipal implements Initializable {
 	
 	private ObservableList<TablaDirecciones> arrayTabla= FXCollections.observableArrayList();
 	private ObservableList<TablaDirecciones> arrayTablaBusqueda= FXCollections.observableArrayList();
+	private ArrayList<TablaDirecciones> tablaDirecciones= new ArrayList<TablaDirecciones>();
 	
 	private Direccion ip;
 	private Direccion mascara;
+	private CalculadoraIP calculadora;
 
 	@FXML
 	void calcularIP(ActionEvent event) {
-
+		try {
+			int primero=Integer.parseInt(ipPrimer.getText());
+			int segundo=Integer.parseInt(ipSegundo.getText());
+			int tercero=Integer.parseInt(ipTercero.getText());
+			int cuarto=Integer.parseInt(ipCuarto.getText());
+			
+			int mask=Integer.parseInt(numMascara.getText());
+			
+			int cantidadSubredes = 1;
+			boolean enBits=false;
+			
+			if(checkSubredes.isSelected()) {
+				if(checkNumSubredes.isSelected()) {
+					cantidadSubredes=Integer.parseInt(numSubredes.getText());
+				}else {
+					cantidadSubredes=Integer.parseInt(numBits.getText());
+					enBits=true;
+				}
+			}	
+			
+			ip=new Direccion(primero,segundo,tercero,cuarto);		
+			mascara=new Direccion(mask);
+			
+			Direccion red=CalculadoraIP.hallarRed(ip, mascara);
+			ArrayList<Integer> redList=red.getDecimal();
+			
+			redPrimer.setText(redList.get(0)+"");
+			redSegundo.setText(redList.get(1)+"");
+			redTercero.setText(redList.get(2)+"");
+			redCuarto.setText(redList.get(3)+"");
+			
+			Direccion broad=CalculadoraIP.hallarBroadcast(ip, mascara);
+			ArrayList<Integer> broadList=broad.getDecimal();
+			
+			broadPrimer.setText(broadList.get(0)+"");
+			broadSegundo.setText(broadList.get(1)+"");
+			broadTercero.setText(broadList.get(2)+"");
+			broadCuarto.setText(broadList.get(3)+"");
+			
+			numBitsRed.setText(mask+"");
+			
+			numBitsHost.setText(32-mask+"");
+			
+			new CalculadoraIP(ip, mascara, cantidadSubredes, enBits);		
+			
+			tablaDirecciones=CalculadoraIP.generarDirecciones();
+			
+			arrayTabla=FXCollections.observableArrayList(tablaDirecciones);
+			System.out.println(tablaDirecciones);
+			
+		}catch(Exception ex) {
+			
+		}
 	}
 
 	@FXML
@@ -195,14 +250,9 @@ public class ControladorVentanaPrincipal implements Initializable {
 		tipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
 		usable.setCellValueFactory(new PropertyValueFactory<>("usable"));
 		
-	//	tablaBusqueda.setItems(arrayTabla);
+		//tablaBusqueda.getColumns().addAll(subred, direccion, tipo, usable);
+		tablaBusqueda.setItems(arrayTabla);
 		
-	}
-
-	@FXML
-	void prueba(ActionEvent event) {
-		System.out.println("evento");
-
 	}
 
 	void eventoTextField(TextField text, int max, int min, KeyEvent event) {

@@ -188,10 +188,10 @@
                                        <children>
                                           <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
                                              <children>
-                                                <TextField fx:id="redPrimer" disable="true" promptText="255" />
-                                                <TextField fx:id="redSegundo" disable="true" promptText="255" GridPane.columnIndex="2" />
-                                                <TextField fx:id="redTercero" disable="true" promptText="255" GridPane.columnIndex="4" />
-                                                <TextField fx:id="redCuarto" disable="true" promptText="255" GridPane.columnIndex="6" />
+                                                <TextField fx:id="redPrimer" editable="false" promptText="255" />
+                                                <TextField fx:id="redSegundo" editable="false" promptText="255" GridPane.columnIndex="2" />
+                                                <TextField fx:id="redTercero" editable="false" promptText="255" GridPane.columnIndex="4" />
+                                                <TextField fx:id="redCuarto" editable="false" promptText="255" GridPane.columnIndex="6" />
                                                 <Label text="." GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                                                 <Label text="." GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                                                 <Label text="." GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
@@ -215,7 +215,7 @@
                                           <GridPane GridPane.columnIndex="1" GridPane.rowIndex="7">
                                              <children>
                                                 <Label text="Número de bits para identificar host" />
-                                                <TextField fx:id="numBitsHost" disable="true" prefHeight="25.0" prefWidth="51.0" promptText="32" GridPane.columnIndex="1" />
+                                                <TextField fx:id="numBitsHost" editable="false" prefHeight="25.0" prefWidth="51.0" promptText="32" GridPane.columnIndex="1" />
                                              </children>
                                              <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.0" minWidth="10.0" prefWidth="200.0" />
@@ -234,10 +234,10 @@
                                           <Label text="Dirección de Broadcast" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                           <GridPane GridPane.columnIndex="1" GridPane.rowIndex="4">
                                              <children>
-                                                <TextField fx:id="broadPrimer" disable="true" editable="false" promptText="255" />
-                                                <TextField fx:id="broadSegundo" disable="true" editable="false" promptText="255" GridPane.columnIndex="2" />
-                                                <TextField fx:id="broadTercero" disable="true" editable="false" promptText="255" GridPane.columnIndex="4" />
-                                                <TextField fx:id="broadCuarto" disable="true" editable="false" promptText="255" GridPane.columnIndex="6" />
+                                                <TextField fx:id="broadPrimer" editable="false" promptText="255" />
+                                                <TextField fx:id="broadSegundo" editable="false" promptText="255" GridPane.columnIndex="2" />
+                                                <TextField fx:id="broadTercero" editable="false" promptText="255" GridPane.columnIndex="4" />
+                                                <TextField fx:id="broadCuarto" editable="false" promptText="255" GridPane.columnIndex="6" />
                                                 <Label text="." GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                                                 <Label text="." GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                                                 <Label text="." GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
@@ -260,7 +260,7 @@
                                           <GridPane GridPane.columnIndex="1" GridPane.rowIndex="6">
                                              <children>
                                                 <Label text="Número de bits para identificar red" />
-                                                <TextField fx:id="numBitsRed" disable="true" prefHeight="25.0" prefWidth="51.0" promptText="32" GridPane.columnIndex="1" />
+                                                <TextField fx:id="numBitsRed" editable="false" prefHeight="25.0" prefWidth="51.0" promptText="32" GridPane.columnIndex="1" />
                                              </children>
                                              <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.0" minWidth="10.0" prefWidth="200.0" />
@@ -274,7 +274,7 @@
                                           <GridPane GridPane.columnIndex="1" GridPane.rowIndex="8">
                                              <children>
                                                 <Label text="Número de direcciones para host" />
-                                                <TextField fx:id="numDireccionesHost" disable="true" prefHeight="25.0" prefWidth="51.0" promptText="32" GridPane.columnIndex="1" />
+                                                <TextField fx:id="numDireccionesHost" editable="false" prefHeight="25.0" prefWidth="51.0" promptText="32" GridPane.columnIndex="1" />
                                              </children>
                                              <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.0" minWidth="10.0" prefWidth="200.0" />
@@ -327,7 +327,7 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                    <TableView fx:id="tablaBusqueda" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                       <columns>
                                         <TableColumn fx:id="subred" prefWidth="75.0" text="Subred" />
                                         <TableColumn fx:id="direccion" prefWidth="267.0" text="Dirección" />
