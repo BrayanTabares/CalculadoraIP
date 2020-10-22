@@ -179,7 +179,7 @@ public class CalculadoraIP {
 	public static ArrayList<ArrayList<Direccion>> hallarSubred(int num, boolean enBits) {
 		int subred = 1;
 		
-		if(enBits)
+		if(!enBits)
 			subred = (int) Math.ceil(Math.log10(num) / Math.log10(2));
 		else
 			subred = num;
@@ -301,12 +301,12 @@ public class CalculadoraIP {
 		/**
 		 * Macara
 		 */
-		Direccion mask = new Direccion(21);
+		Direccion mask = new Direccion(24);
 		
 		/**
 		 * Cantidad de bits que usa la subred
 		 */
-		int bits=2;
+		int bits=1;
 		
 		CalculadoraIP cal = new CalculadoraIP(bin2, mask, bits, false);
 		ArrayList<TablaDirecciones> k = cal.generarDirecciones();
