@@ -195,7 +195,7 @@ public class ControladorVentanaPrincipal implements Initializable {
 		tipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
 		usable.setCellValueFactory(new PropertyValueFactory<>("usable"));
 		
-		tablaBusqueda.setItems(arrayTabla);
+	//	tablaBusqueda.setItems(arrayTabla);
 		
 	}
 
