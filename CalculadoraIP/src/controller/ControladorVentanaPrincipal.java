@@ -13,6 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.TextFormatter.Change;
@@ -27,16 +28,27 @@ public class ControladorVentanaPrincipal implements Initializable {
 
 	@FXML
 	private TextField ipPrimer, ipSegundo, ipTercero, ipCuarto, maskPrimer, maskSegundo, maskTercero, maskCuarto,
-			numMascara, numBits, numSubredes;
+			numMascara, numBits, numSubredes, redPrimer, redSegundo, redTercero, redCuarto, broadPrimer, broadSegundo,
+			broadTercero, broadCuarto, buscarPrimer, buscarSegundo, buscarTercero, buscarCuarto, numBitsRed,
+			numBitsHost, numDireccionesHost, numBuscarSubred, numBuscarHost;
 
 	@FXML
-	private CheckBox checkSubredes, checkNumBits, checkNumSubredes;
+	private CheckBox checkSubredes, checkNumBits, checkNumSubredes, checkBuscarDireccion, checkBuscarSubred,
+			checkBuscarNumSubred, checkBuscarNumHost;
+
+	@FXML
+    private TableColumn<String, String> subred,direccion,tipo,usable;
 	
 	private Direccion ip;
 	private Direccion mascara;
 
 	@FXML
 	void calcularIP(ActionEvent event) {
+
+	}
+
+	@FXML
+	void buscar(ActionEvent event) {
 
 	}
 
@@ -61,22 +73,21 @@ public class ControladorVentanaPrincipal implements Initializable {
 
 		ipPrimer.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0, integerFilter));
 		ipPrimer.addEventFilter(KeyEvent.ANY, event -> {
-			eventoTextField(ipPrimer, 255,0, event);
+			eventoTextField(ipPrimer, 255, 0, event);
 		});
 		ipSegundo.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0, integerFilter));
 		ipSegundo.addEventFilter(KeyEvent.ANY, event -> {
-			eventoTextField(ipSegundo, 255,0, event);
+			eventoTextField(ipSegundo, 255, 0, event);
 		});
 		ipTercero.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0, integerFilter));
 		ipTercero.addEventFilter(KeyEvent.ANY, event -> {
-			eventoTextField(ipTercero, 255,0, event);
+			eventoTextField(ipTercero, 255, 0, event);
 		});
 		ipCuarto.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0, integerFilter));
 		ipCuarto.addEventFilter(KeyEvent.ANY, event -> {
-			eventoTextField(ipCuarto, 255,0, event);
+			eventoTextField(ipCuarto, 255, 0, event);
 		});
 
-		
 		UnaryOperator<Change> integerFilterMask = change -> {
 			String newText = change.getControlNewText();
 			if (newText.matches("-?([1-9][0-9]*)?")) {
@@ -84,21 +95,21 @@ public class ControladorVentanaPrincipal implements Initializable {
 			}
 			return null;
 		};
-		
+
 		numMascara.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0, integerFilterMask));
 		numMascara.addEventFilter(KeyEvent.ANY, event -> {
-			eventoTextField(numMascara, 32,1, event);
+			eventoTextField(numMascara, 32, 1, event);
 			if (numMascara.getText().length() > 0) {
 				try {
 					int aux = Integer.parseInt(numMascara.getText());
-					mascara=new Direccion(aux);
-					ArrayList<Integer> array= mascara.getDecimal();
-					maskPrimer.setText(array.get(0)+"");
-					maskSegundo.setText(array.get(1)+"");
-					maskTercero.setText(array.get(2)+"");
-					maskCuarto.setText(array.get(3)+"");
+					mascara = new Direccion(aux);
+					ArrayList<Integer> array = mascara.getDecimal();
+					maskPrimer.setText(array.get(0) + "");
+					maskSegundo.setText(array.get(1) + "");
+					maskTercero.setText(array.get(2) + "");
+					maskCuarto.setText(array.get(3) + "");
 				} catch (Exception exp) {
-					
+
 				}
 			}
 		});
