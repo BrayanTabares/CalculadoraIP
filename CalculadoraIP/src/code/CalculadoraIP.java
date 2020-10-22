@@ -248,7 +248,11 @@ public class CalculadoraIP {
 		TablaDirecciones resul = new TablaDirecciones(numSubred+"", host.toString(), host.getTipo()+" #"+numHost, "Disponible");
 		return new ArrayList<TablaDirecciones>(Arrays.asList(resul));
 	}
-	
+	/**
+	 * Se busca un host en todas las subredes disponibles
+	 * @param numHost
+	 * @return
+	 */
 	public static ArrayList<TablaDirecciones> buscarHost(int numHost){
 		ArrayList<TablaDirecciones> tabla = new ArrayList<TablaDirecciones>();
 		for (int i=0; i<subredes.size(); i++) {
@@ -259,7 +263,11 @@ public class CalculadoraIP {
 			
 		return tabla;
 	}
-	
+	/**
+	 * Se listan todos los host de una subred
+	 * @param numSubred
+	 * @return
+	 */
 	public static ArrayList<TablaDirecciones> listarhostsEnSubred(int numSubred){
 		ArrayList<TablaDirecciones> tabla = new ArrayList<TablaDirecciones>();
 		int nHost = 1;
