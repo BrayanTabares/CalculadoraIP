@@ -9,7 +9,7 @@ package ui;
  */
 public class TablaDirecciones {
 
-	private String subred,
+	String subred,
 			direccion,
 			tipo,
 			disponible;

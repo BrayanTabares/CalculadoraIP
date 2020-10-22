@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 
 import code.Direccion;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,6 +22,7 @@ import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.converter.IntegerStringConverter;
+import ui.TablaDirecciones;
 
 public class ControladorVentanaPrincipal implements Initializable {
 
@@ -37,7 +40,9 @@ public class ControladorVentanaPrincipal implements Initializable {
 			checkBuscarNumSubred, checkBuscarNumHost;
 
 	@FXML
-    private TableColumn<String, String> subred,direccion,tipo,usable;
+    private TableColumn<TablaDirecciones, String> subred,direccion,tipo,usable;
+	
+	private ObservableList<TablaDirecciones> arrayTabla= FXCollections.observableArrayList();
 	
 	private Direccion ip;
 	private Direccion mascara;
@@ -49,7 +54,7 @@ public class ControladorVentanaPrincipal implements Initializable {
 
 	@FXML
 	void buscar(ActionEvent event) {
-
+		
 	}
 
 	@Override
@@ -87,6 +92,23 @@ public class ControladorVentanaPrincipal implements Initializable {
 		ipCuarto.addEventFilter(KeyEvent.ANY, event -> {
 			eventoTextField(ipCuarto, 255, 0, event);
 		});
+		
+		buscarPrimer.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0, integerFilter));
+		buscarPrimer.addEventFilter(KeyEvent.ANY, event -> {
+			eventoTextField(buscarPrimer, 255, 0, event);
+		});
+		buscarSegundo.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0, integerFilter));
+		buscarSegundo.addEventFilter(KeyEvent.ANY, event -> {
+			eventoTextField(buscarSegundo, 255, 0, event);
+		});
+		buscarTercero.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0, integerFilter));
+		buscarTercero.addEventFilter(KeyEvent.ANY, event -> {
+			eventoTextField(buscarTercero, 255, 0, event);
+		});
+		buscarCuarto.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0, integerFilter));
+		buscarCuarto.addEventFilter(KeyEvent.ANY, event -> {
+			eventoTextField(buscarCuarto, 255, 0, event);
+		});
 
 		UnaryOperator<Change> integerFilterMask = change -> {
 			String newText = change.getControlNewText();
@@ -119,6 +141,14 @@ public class ControladorVentanaPrincipal implements Initializable {
 		// 255, event);});
 
 		numBits.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0, integerFilter));
+		// ipPrimer.addEventFilter(KeyEvent.ANY, event -> { eventoTextField(ipPrimer,
+		// 255, event);});
+		
+		numBuscarSubred.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0, integerFilter));
+		// ipPrimer.addEventFilter(KeyEvent.ANY, event -> { eventoTextField(numSubredes,
+		// 255, event);});
+
+		numBuscarHost.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0, integerFilter));
 		// ipPrimer.addEventFilter(KeyEvent.ANY, event -> { eventoTextField(ipPrimer,
 		// 255, event);});
 	}
