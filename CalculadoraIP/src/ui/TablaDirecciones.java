@@ -14,6 +14,10 @@ public class TablaDirecciones {
 			tipo,
 			disponible;
 
+	public TablaDirecciones() {
+	super();
+	}
+	
 	public TablaDirecciones(String subred, String direccion, String tipo, String disponible) {
 		super();
 		this.subred = subred;

@@ -17,6 +17,7 @@ public class Direccion {
 	private int numero;
 	String cadenaBinario;
 	String cadenaDecimal;
+	private Tipo tipo;
 
 	/**
 	 * @param direccion
@@ -89,6 +90,14 @@ public class Direccion {
 	public String getCadenaDecimal() {
 		actualizarString();
 		return cadenaDecimal;
+	}
+
+	public Tipo getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(Tipo tipo) {
+		this.tipo = tipo;
 	}
 
 	/**

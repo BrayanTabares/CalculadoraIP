@@ -4,6 +4,9 @@
 package code;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+
+import ui.TablaDirecciones;
 
 /**
  * @author Brayan-PC
@@ -19,14 +22,6 @@ public class CalculadoraIP {
 	private static ArrayList<Direccion> host;
 	private static ArrayList<ArrayList<Direccion>> subredes;
 	
-	public CalculadoraIP(Direccion ip, Direccion mask) {
-		this.ip = ip;
-		this.mask = mask;
-		red = hallarRed(ip, mask);
-		broad = hallarBroadcast(ip, mask.getNumero());
-		host = hallarHost(ip, mask.getNumero());
-		
-	}
 	public CalculadoraIP(Direccion ip, Direccion mask, int cantidadSubredes, boolean enBits) {
 		this.ip = ip;
 		this.mask = mask;
@@ -161,8 +156,8 @@ public class CalculadoraIP {
 	 */
 	public static ArrayList<Direccion> hallarHost(Direccion ip, int mask) {
 		ArrayList<Direccion> host = new ArrayList<Direccion>();
-		Direccion actual = hallarRed(ip, mask);
-		Direccion tope = hallarBroadcast(ip, mask);
+		Direccion actual = ip;
+		Direccion tope = broad;
 		while (!actual.equals(tope)) {
 			host.add(actual);
 			actual = actual.obtenerDireccionBinariaSiguiente();
@@ -182,10 +177,12 @@ public class CalculadoraIP {
 	 */
 	public static ArrayList<ArrayList<Direccion>> hallarSubred(int num, boolean enBits) {
 		int subred = 1;
+		
 		if(enBits)
 			subred = (int) Math.ceil(Math.log10(num) / Math.log10(2));
 		else
 			subred = num;
+		
 		ArrayList<ArrayList<Direccion>> host = new ArrayList<ArrayList<Direccion>>();
 		Direccion actual = red;
 		Direccion tope = broad;
@@ -194,10 +191,17 @@ public class CalculadoraIP {
 			for (int i = 0; i < Math.pow(2, subred); i++) {
 				ArrayList<Direccion> aux = new ArrayList<Direccion>();
 				Direccion topeLocal = actual.obtenerDireccionBinariaSiguiente(mask.getNumero() + subred);
+				actual.setTipo(Tipo.RED);
+				aux.add(actual);
+				actual = actual.obtenerDireccionBinariaSiguiente();
 				while (!actual.equals(topeLocal)) {
+					actual.setTipo(Tipo.HOST);
 					aux.add(actual);
 					actual = actual.obtenerDireccionBinariaSiguiente();
 				}
+				actual.setTipo(Tipo.BROADCAST);
+				aux.add(actual);
+				actual = actual.obtenerDireccionBinariaSiguiente();
 				host.add(aux);
 			}
 		}
@@ -224,7 +228,30 @@ public class CalculadoraIP {
 		return Tipo.HOST;
 	}
 
-
+	public static ArrayList<TablaDirecciones> generarDirecciones() {
+		ArrayList<TablaDirecciones> tabla = new ArrayList<TablaDirecciones>();
+		for (int i=0; i<subredes.size(); i++) {
+			int nHost = 1;
+			for(Direccion host: subredes.get(i)) {
+				TablaDirecciones fila = new TablaDirecciones();
+				fila.setSubred((i+1)+"");
+				fila.setDireccion(host.toString());
+				
+				if(host.getTipo() != Tipo.HOST) {
+					fila.setDisponible("No Disponible");
+					fila.setTipo(host.getTipo()+"");
+				}else {
+					fila.setDisponible("Disponible");
+					fila.setTipo(host.getTipo()+" #"+nHost);
+					nHost++;
+				}
+					
+				tabla.add(fila);				
+			}
+		}
+		
+		return tabla;
+	}
 	
 	
 public static void main(String[] args) {
@@ -236,39 +263,45 @@ public static void main(String[] args) {
 		/**
 		 * Macara
 		 */
-		int mask = 21;
+		Direccion mask = new Direccion(21);
 		
 		/**
 		 * Cantidad de bits que usa la subred
 		 */
-		int bits=8;
+		int bits=2;
 		
-		/**
-		 * Imprimir la subred
-		 */
-		int max = 177;
+		CalculadoraIP cal = new CalculadoraIP(bin2, mask, bits, false);
+		ArrayList<TablaDirecciones> k = cal.generarDirecciones();
+		for (TablaDirecciones fila : k) {
+			System.out.println(fila.getSubred()+" - "+fila.getDireccion()+" - "+fila.getTipo()+" - "+fila.getDisponible());
+		}
 		
-		Direccion mascara = new Direccion(mask);
-		Direccion red = hallarRed(bin2, mask);
-		Direccion broad = hallarBroadcast(bin2, mask);
-		ArrayList<Direccion> host = hallarHost(bin2, mask);
-
-		System.out.println("Ip  :" + bin2.getCadenaBinario() + " " + bin2);
-		System.out.println("\nMask:" + mascara.getCadenaBinario() + " " + mascara);
-
-		System.out.println("\nRed :" + red.getCadenaBinario() + " " + red);
-		System.out.println("\nBro :" + broad.getCadenaBinario() + " " + broad);
-		System.out.println("\nHost");
+//		/**
+//		 * Imprimir la subred
+//		 */
+//		int max = 177;
+//		
+//		Direccion mascara = new Direccion(mask);
+//		Direccion red = hallarRed(bin2, mask);
+//		Direccion broad = hallarBroadcast(bin2, mask);
+//		ArrayList<Direccion> host = hallarHost(bin2, mask);
+//
+//		System.out.println("Ip  :" + bin2.getCadenaBinario() + " " + bin2);
+//		System.out.println("\nMask:" + mascara.getCadenaBinario() + " " + mascara);
+//
+//		System.out.println("\nRed :" + red.getCadenaBinario() + " " + red);
+//		System.out.println("\nBro :" + broad.getCadenaBinario() + " " + broad);
+//		System.out.println("\nHost");
 
 //		for(int i=0;i<17;i++) {
 //			red=obtenerDireccionBinariaSiguiente(red);
 //			System.out.println(red+ " "+obtenerDireccionDecimal(red));
 //		}
-
-		for (Direccion aux : host) {
-			System.out
-					.println(aux.getCadenaBinario() + " " + aux.getCadenaDecimal() + " " + identificarTipo(aux, mask));
-		}
+//
+//		for (Direccion aux : host) {
+//			System.out
+//					.println(aux.getCadenaBinario() + " " + aux.getCadenaDecimal() + " " + identificarTipo(aux, mask));
+//		}
 
 //		System.out.println("\nSubredes :");
 //		int i=1;
