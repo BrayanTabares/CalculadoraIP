@@ -4,6 +4,7 @@
 package code;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
 import ui.TablaDirecciones;
@@ -208,26 +209,10 @@ public class CalculadoraIP {
 
 		return host;
 	}
-
 	/**
-	 * Metodo para identificar si una direccion ip corresponde a Red, Broadcast o
-	 * host, tener en cuenta que solo se identifica de acuerdo a la mascara de red,
-	 * asi que no es funcional para las subredes a menos que se tengan las mascaras
-	 * que se generan en las subredes (no implementado)
-	 * 
-	 * @param ip
-	 * @param mask
+	 * Genera un arreglo de tipo TablaDirecciones con todas las subredes y sus host
 	 * @return
 	 */
-	public static Tipo identificarTipo(Direccion ip, int mask) {
-		if (hallarRed(ip, mask).equals(ip)) {
-			return Tipo.RED;
-		} else if (hallarBroadcast(ip, mask).equals(ip)) {
-			return Tipo.BROADCAST;
-		}
-		return Tipo.HOST;
-	}
-
 	public static ArrayList<TablaDirecciones> generarDirecciones() {
 		ArrayList<TablaDirecciones> tabla = new ArrayList<TablaDirecciones>();
 		for (int i=0; i<subredes.size(); i++) {
@@ -253,8 +238,13 @@ public class CalculadoraIP {
 		return tabla;
 	}
 	
+	public static ArrayList<TablaDirecciones> buscarHostEnSubred(int numSubred, int numHost){
+		Direccion host = subredes.get(numSubred-1).get(numHost);
+		TablaDirecciones resul = new TablaDirecciones(numSubred+"", host.toString(), host.getTipo()+" #"+numHost, "Disponible");
+		return new ArrayList<TablaDirecciones>(Arrays.asList(resul));
+	}
 	
-public static void main(String[] args) {
+	public static void main(String[] args) {
 		
 		/**
 		 * ip
@@ -276,6 +266,8 @@ public static void main(String[] args) {
 			System.out.println(fila.getSubred()+" - "+fila.getDireccion()+" - "+fila.getTipo()+" - "+fila.getDisponible());
 		}
 		
+		ArrayList<TablaDirecciones> resul = cal.buscarHostEnSubred(4, 478);
+		System.out.println(resul.get(0).getSubred()+" - "+resul.get(0).getDireccion()+" - "+resul.get(0).getTipo()+" - "+resul.get(0).getDisponible());
 //		/**
 //		 * Imprimir la subred
 //		 */
