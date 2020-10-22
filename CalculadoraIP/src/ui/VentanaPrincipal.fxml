@@ -327,20 +327,27 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
+                                    <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                      <columns>
+                                        <TableColumn fx:id="subred" prefWidth="75.0" text="Subred" />
+                                        <TableColumn fx:id="direccion" prefWidth="267.0" text="Dirección" />
+                                          <TableColumn fx:id="tipo" prefWidth="74.0" text="Tipo" />
+                                          <TableColumn fx:id="usable" prefWidth="75.0" text="¿Usable?" />
+                                      </columns>
+                                    </TableView>
                                     <GridPane GridPane.columnIndex="1">
                                        <children>
                                           <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
                                              <children>
-                                                <TextField promptText="255" GridPane.columnIndex="2" />
                                                 <TextField fx:id="buscarSegundo" promptText="255" GridPane.columnIndex="4" />
                                                 <TextField fx:id="buscarTercero" promptText="255" GridPane.columnIndex="6" />
                                                 <TextField fx:id="buscarCuarto" promptText="255" GridPane.columnIndex="8" />
                                                 <Label text="." GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                                                 <Label text="." GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                                                 <Label text="." GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                                                <TextField fx:id="buscarPrimer" onAction="#prueba" promptText="32" GridPane.columnIndex="2" />
                                                 <Label text="Dirección" GridPane.columnIndex="1" />
-                                                <CheckBox fx:id="checkBuscarDireccion" mnemonicParsing="false" onAction="#onSubred" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                                <CheckBox fx:id="checkBuscarDireccion" mnemonicParsing="false" onAction="#switchBuscar1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                                <TextField fx:id="buscarPrimer" promptText="255" GridPane.columnIndex="2" />
                                              </children>
                                              <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="30.0" />
@@ -352,23 +359,6 @@
                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="50.0" />
                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="30.0" />
                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="50.0" />
-                                             </columnConstraints>
-                                             <rowConstraints>
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                             </rowConstraints>
-                                          </GridPane>
-                                          <GridPane GridPane.columnIndex="1" GridPane.rowIndex="5">
-                                             <children>
-                                                <Label text="Número de host" GridPane.columnIndex="2" />
-                                                <TextField fx:id="numBuscarHost" prefHeight="25.0" prefWidth="51.0" promptText="32" GridPane.columnIndex="3" />
-                                                <CheckBox fx:id="checkBuscarNumHost" mnemonicParsing="false" onAction="#switchSubred2" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                                             </children>
-                                             <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.0" minWidth="10.0" prefWidth="100.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.0" minWidth="10.0" prefWidth="64.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.0" minWidth="10.0" prefWidth="200.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.0" minWidth="10.0" prefWidth="122.0" />
                                              </columnConstraints>
                                              <rowConstraints>
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -376,9 +366,9 @@
                                           </GridPane>
                                           <GridPane GridPane.columnIndex="1" GridPane.rowIndex="4">
                                              <children>
-                                                <Label text="Número de subred" GridPane.columnIndex="2" />
-                                                <TextField fx:id="numBuscarSubred" prefHeight="25.0" prefWidth="51.0" promptText="32" GridPane.columnIndex="3" />
-                                                <CheckBox fx:id="checkBuscarNumSubred" mnemonicParsing="false" onAction="#switchSubred1" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                                <Label text="Número de host" GridPane.columnIndex="2" />
+                                                <TextField fx:id="numBuscarHost" prefHeight="25.0" prefWidth="51.0" promptText="32" GridPane.columnIndex="3" />
+                                                <CheckBox fx:id="checkBuscarNumHost" mnemonicParsing="false" onAction="#switchBuscar4" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                                              </children>
                                              <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.0" minWidth="10.0" prefWidth="100.0" />
@@ -391,14 +381,34 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                              </rowConstraints>
                                           </GridPane>
-                                          <GridPane GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                          <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
                                              <children>
-                                                <Button fx:id="btnBuscar" defaultButton="true" mnemonicParsing="false" onAction="#buscar" prefHeight="38.0" prefWidth="420.0" text="Buscar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                                <Label text="Número de subred" GridPane.columnIndex="2" />
+                                                <TextField fx:id="numBuscarSubred" prefHeight="25.0" prefWidth="51.0" promptText="32" GridPane.columnIndex="3" />
+                                                <CheckBox fx:id="checkBuscarNumSubred" mnemonicParsing="false" onAction="#switchBuscar3" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                                              </children>
                                              <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="420.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="420.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="420.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.0" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.0" minWidth="10.0" prefWidth="64.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.0" minWidth="10.0" prefWidth="200.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.0" minWidth="10.0" prefWidth="122.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                          </GridPane>
+                                          <GridPane GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                             <children>
+                                                <Button fx:id="btnBuscar" defaultButton="true" mnemonicParsing="false" onAction="#buscar" prefHeight="38.0" prefWidth="420.0" text="Buscar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                                <Button mnemonicParsing="false" onAction="#limpiar" prefHeight="38.0" prefWidth="420.0" text="Limpiar" GridPane.columnIndex="3" />
+                                             </children>
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="50.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="200.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="200.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="50.0" />
                                              </columnConstraints>
                                              <rowConstraints>
                                                 <RowConstraints maxHeight="64.0" minHeight="-Infinity" prefHeight="64.0" vgrow="SOMETIMES" />
@@ -406,6 +416,9 @@
                                              </rowConstraints>
                                           </GridPane>
                                           <GridPane GridPane.rowIndex="1">
+                                             <children>
+                                                <Label text="Buscar por:" />
+                                             </children>
                                              <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="177.0" minWidth="-Infinity" prefWidth="75.0" />
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.0" minWidth="10.0" prefWidth="47.0" />
@@ -413,14 +426,11 @@
                                              <rowConstraints>
                                                 <RowConstraints minHeight="-Infinity" prefHeight="10.0" vgrow="SOMETIMES" />
                                              </rowConstraints>
-                                             <children>
-                                                <Label text="Buscar por:" />
-                                             </children>
                                           </GridPane>
-                                          <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                          <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
                                              <children>
                                                 <Label text="Subred" GridPane.columnIndex="1" />
-                                                <CheckBox fx:id="checkBuscarSubred" mnemonicParsing="false" onAction="#onSubred" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                                <CheckBox fx:id="checkBuscarSubred" mnemonicParsing="false" onAction="#switchBuscar2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                                              </children>
                                              <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="30.0" />
@@ -447,21 +457,12 @@
                                           <RowConstraints minHeight="-Infinity" prefHeight="15.0" vgrow="SOMETIMES" />
                                           <RowConstraints minHeight="-Infinity" vgrow="SOMETIMES" />
                                           <RowConstraints minHeight="-Infinity" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="-Infinity" vgrow="SOMETIMES" />
                                           <RowConstraints vgrow="SOMETIMES" />
                                           <RowConstraints vgrow="SOMETIMES" />
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                     </GridPane>
-                                    <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                      <columns>
-                                        <TableColumn fx:id="subred" prefWidth="75.0" text="Subred" />
-                                        <TableColumn prefWidth="267.0" text="Dirección" />
-                                          <TableColumn prefWidth="74.0" text="Tipo" />
-                                          <TableColumn prefWidth="75.0" text="¿Usable?" />
-                                      </columns>
-                                    </TableView>
                                  </children>
                               </GridPane>
                            </children>

@@ -57,9 +57,17 @@ public class ControladorVentanaPrincipal implements Initializable {
 		
 	}
 
+	@FXML
+	void limpiar(ActionEvent event) {
+		
+	}
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
+		/**
+		 * Pestaña Principal
+		 */
 		checkSubredes.setSelected(false);
 		numMascara.setText("1");
 		onSubred(null);
@@ -67,7 +75,9 @@ public class ControladorVentanaPrincipal implements Initializable {
 		maskSegundo.setDisable(true);
 		maskTercero.setDisable(true);
 		maskCuarto.setDisable(true);
-
+		
+		//Campos pestaña Principal
+		
 		UnaryOperator<Change> integerFilter = change -> {
 			String newText = change.getControlNewText();
 			if (newText.matches("-?([0-9]*)?")) {
@@ -151,6 +161,15 @@ public class ControladorVentanaPrincipal implements Initializable {
 		numBuscarHost.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0, integerFilter));
 		// ipPrimer.addEventFilter(KeyEvent.ANY, event -> { eventoTextField(ipPrimer,
 		// 255, event);});
+		
+		/**
+		 * Pestaña Tablas
+		 */
+		
+		checkBuscarDireccion.setSelected(true);
+		checkBuscarNumSubred.setSelected(true);
+		switchBuscar1(null);
+		
 	}
 
 	@FXML
@@ -208,4 +227,55 @@ public class ControladorVentanaPrincipal implements Initializable {
 			numSubredes.setDisable(true);
 		}
 	}
+	
+	@FXML
+	void switchBuscar1(ActionEvent event) {
+		numBuscarHost.setDisable(true);
+		numBuscarSubred.setDisable(true);
+		buscarPrimer.setDisable(false);
+		buscarSegundo.setDisable(false);
+		buscarTercero.setDisable(false);
+		buscarCuarto.setDisable(false);
+		checkBuscarSubred.setSelected(false);
+		checkBuscarDireccion.setSelected(true);
+		checkBuscarNumHost.setDisable(true);
+		checkBuscarNumSubred.setDisable(true);
+	}
+	
+	@FXML
+	void switchBuscar2(ActionEvent event) {
+		numBuscarHost.setDisable(true);
+		numBuscarSubred.setDisable(false);
+		buscarPrimer.setDisable(true);
+		buscarSegundo.setDisable(true);
+		buscarTercero.setDisable(true);
+		buscarCuarto.setDisable(true);
+		checkBuscarSubred.setSelected(true);
+		checkBuscarDireccion.setSelected(false);
+		checkBuscarNumHost.setDisable(false);
+		checkBuscarNumSubred.setDisable(false);
+		switchBuscar3(null);
+		switchBuscar4(null);
+		
+	}
+	
+	@FXML
+	void switchBuscar3(ActionEvent event) {
+		if(!checkBuscarNumSubred.isSelected()) {
+			numBuscarSubred.setDisable(true);
+		}else {
+			numBuscarSubred.setDisable(false);
+		}
+	}
+	
+	@FXML
+	void switchBuscar4(ActionEvent event) {
+		if(!checkBuscarNumHost.isSelected()) {
+			numBuscarHost.setDisable(true);
+		}else {
+			numBuscarHost.setDisable(false);
+		}
+	}
+	
+	
 }
