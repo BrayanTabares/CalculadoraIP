@@ -227,7 +227,10 @@ public class CalculadoraIP {
 					fila.setDisponible("No Disponible");
 					fila.setTipo(host.getTipo()+"");
 				}else {
-					fila.setDisponible("Disponible");
+					if(subredes.size()>1 && (i==0 || i==subredes.size()-1) )
+						fila.setDisponible("No Disponible");
+					else
+						fila.setDisponible("Disponible");
 					fila.setTipo(host.getTipo()+" #"+nHost);
 					nHost++;
 				}
@@ -302,12 +305,12 @@ public class CalculadoraIP {
 		/**
 		 * Macara
 		 */
-		Direccion mask = new Direccion(24);
+		Direccion mask = new Direccion(21);
 		
 		/**
 		 * Cantidad de bits que usa la subred
 		 */
-		int bits=2;
+		int bits=4;
 		
 		CalculadoraIP cal = new CalculadoraIP(bin2, mask, bits, false);
 		ArrayList<TablaDirecciones> k = cal.generarDirecciones();
