@@ -378,4 +378,21 @@ public class Direccion {
 		return new Direccion(dec, false);
 	}
 
+	public Direccion sumarADireccionDecimal(Direccion dir, int suma) {
+		ArrayList<Integer> dec = dir.decimal;
+		boolean completada = false;
+		int aux = 0, pos = 3;
+		do{
+			suma = dec.get(pos)+suma;
+			aux =  suma-255;
+			if(aux>0) {
+				dec.set(pos, 0);
+				suma = aux;
+				pos--;
+			}
+		}while(aux>0);
+		dec.set(pos, suma);
+		return new Direccion(dec, true);
+	}
+	
 }

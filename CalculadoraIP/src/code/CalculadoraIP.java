@@ -185,7 +185,7 @@ public class CalculadoraIP {
 			subred = num;
 		
 		ArrayList<ArrayList<Direccion>> host = new ArrayList<ArrayList<Direccion>>();
-		Direccion actual = red;
+		Direccion actual = ip;
 		Direccion tope = broad;
 		if (subred <= 32 - mask.getNumero()) {
 			Direccion maskAux = new Direccion(mask.getNumero());
@@ -200,10 +200,11 @@ public class CalculadoraIP {
 					aux.add(actual);
 					actual = actual.obtenerDireccionBinariaSiguiente();
 				}
-				actual.setTipo(Tipo.BROADCAST);
-				aux.add(actual);
-				actual = actual.obtenerDireccionBinariaSiguiente();
+				Direccion auxiliar = aux.get(aux.size()-1);
+				auxiliar.setTipo(Tipo.BROADCAST);
+				aux.set(aux.size()-1, auxiliar);
 				host.add(aux);
+				
 			}
 		}
 
@@ -306,7 +307,7 @@ public class CalculadoraIP {
 		/**
 		 * Cantidad de bits que usa la subred
 		 */
-		int bits=1;
+		int bits=2;
 		
 		CalculadoraIP cal = new CalculadoraIP(bin2, mask, bits, false);
 		ArrayList<TablaDirecciones> k = cal.generarDirecciones();
@@ -314,25 +315,25 @@ public class CalculadoraIP {
 			System.out.println(fila.getSubred()+" - "+fila.getDireccion()+" - "+fila.getTipo()+" - "+fila.getDisponible());
 		}
 		
-		System.out.println("Búsqueda por host y subred:");
-		
-		ArrayList<TablaDirecciones> resul = cal.buscarHostEnSubred(4, 478);
-		System.out.println(resul.get(0).getSubred()+" - "+resul.get(0).getDireccion()+" - "+resul.get(0).getTipo()+" - "+resul.get(0).getDisponible());
-		
-		System.out.println("Búsqueda por host:");
-		
-		ArrayList<TablaDirecciones> resul2 = cal.buscarHost(510);
-		for (TablaDirecciones tablaDirecciones : resul2) {
-			System.out.println(tablaDirecciones.getSubred()+" - "+tablaDirecciones.getDireccion()+" - "+tablaDirecciones.getTipo()+" - "+tablaDirecciones.getDisponible());
-		}
-		
-		System.out.println("Listar hosts en su subred:");
-		
-		ArrayList<TablaDirecciones> resul3 = cal.listarhostsEnSubred(4);
-		for (TablaDirecciones tablaDirecciones2 : resul3) {
-			System.out.println(tablaDirecciones2.getSubred()+" - "+tablaDirecciones2.getDireccion()+" - "+tablaDirecciones2.getTipo()+" - "+tablaDirecciones2.getDisponible());
-		}
-		
+////		System.out.println("Búsqueda por host y subred:");
+//		
+////		ArrayList<TablaDirecciones> resul = cal.buscarHostEnSubred(1, 100);
+////		System.out.println(resul.get(0).getSubred()+" - "+resul.get(0).getDireccion()+" - "+resul.get(0).getTipo()+" - "+resul.get(0).getDisponible());
+//		
+////		System.out.println("Búsqueda por host:");
+//		
+////		ArrayList<TablaDirecciones> resul2 = cal.buscarHost(100);
+//		for (TablaDirecciones tablaDirecciones : resul2) {
+//			System.out.println(tablaDirecciones.getSubred()+" - "+tablaDirecciones.getDireccion()+" - "+tablaDirecciones.getTipo()+" - "+tablaDirecciones.getDisponible());
+//		}
+//		
+////		System.out.println("Listar hosts en su subred:");
+//		
+////		ArrayList<TablaDirecciones> resul3 = cal.listarhostsEnSubred(1);
+//		for (TablaDirecciones tablaDirecciones2 : resul3) {
+//			System.out.println(tablaDirecciones2.getSubred()+" - "+tablaDirecciones2.getDireccion()+" - "+tablaDirecciones2.getTipo()+" - "+tablaDirecciones2.getDisponible());
+//		}
+//		
 //		/**
 //		 * Imprimir la subred
 //		 */
