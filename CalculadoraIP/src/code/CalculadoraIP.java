@@ -237,11 +237,51 @@ public class CalculadoraIP {
 		
 		return tabla;
 	}
-	
+	/**
+	 * Se busca un host especifico en una subred indicada
+	 * @param numSubred
+	 * @param numHost
+	 * @return
+	 */
 	public static ArrayList<TablaDirecciones> buscarHostEnSubred(int numSubred, int numHost){
 		Direccion host = subredes.get(numSubred-1).get(numHost);
 		TablaDirecciones resul = new TablaDirecciones(numSubred+"", host.toString(), host.getTipo()+" #"+numHost, "Disponible");
 		return new ArrayList<TablaDirecciones>(Arrays.asList(resul));
+	}
+	
+	public static ArrayList<TablaDirecciones> buscarHost(int numHost){
+		ArrayList<TablaDirecciones> tabla = new ArrayList<TablaDirecciones>();
+		for (int i=0; i<subredes.size(); i++) {
+			Direccion host = subredes.get(i).get(numHost);
+			TablaDirecciones resul = new TablaDirecciones((i+1)+"", host.toString(), host.getTipo()+" #"+numHost, "Disponible");
+			tabla.add(resul);
+		}
+			
+		return tabla;
+	}
+	
+	public static ArrayList<TablaDirecciones> listarhostsEnSubred(int numSubred){
+		ArrayList<TablaDirecciones> tabla = new ArrayList<TablaDirecciones>();
+		int nHost = 1;
+		for (Direccion host: subredes.get(numSubred-1)) {
+			TablaDirecciones fila = new TablaDirecciones();
+			fila.setSubred((numSubred)+"");
+			fila.setDireccion(host.toString());
+			
+			if(host.getTipo() != Tipo.HOST) {
+				fila.setDisponible("No Disponible");
+				fila.setTipo(host.getTipo()+"");
+			}else {
+				fila.setDisponible("Disponible");
+				fila.setTipo(host.getTipo()+" #"+nHost);
+				nHost++;
+			}
+				
+			tabla.add(fila);
+			
+		}
+			
+		return tabla;
 	}
 	
 	public static void main(String[] args) {
@@ -266,8 +306,25 @@ public class CalculadoraIP {
 			System.out.println(fila.getSubred()+" - "+fila.getDireccion()+" - "+fila.getTipo()+" - "+fila.getDisponible());
 		}
 		
+		System.out.println("Búsqueda por host y subred:");
+		
 		ArrayList<TablaDirecciones> resul = cal.buscarHostEnSubred(4, 478);
 		System.out.println(resul.get(0).getSubred()+" - "+resul.get(0).getDireccion()+" - "+resul.get(0).getTipo()+" - "+resul.get(0).getDisponible());
+		
+		System.out.println("Búsqueda por host:");
+		
+		ArrayList<TablaDirecciones> resul2 = cal.buscarHost(510);
+		for (TablaDirecciones tablaDirecciones : resul2) {
+			System.out.println(tablaDirecciones.getSubred()+" - "+tablaDirecciones.getDireccion()+" - "+tablaDirecciones.getTipo()+" - "+tablaDirecciones.getDisponible());
+		}
+		
+		System.out.println("Listar hosts en su subred:");
+		
+		ArrayList<TablaDirecciones> resul3 = cal.listarhostsEnSubred(4);
+		for (TablaDirecciones tablaDirecciones2 : resul3) {
+			System.out.println(tablaDirecciones2.getSubred()+" - "+tablaDirecciones2.getDireccion()+" - "+tablaDirecciones2.getTipo()+" - "+tablaDirecciones2.getDisponible());
+		}
+		
 //		/**
 //		 * Imprimir la subred
 //		 */
