@@ -284,6 +284,9 @@ public class CalculadoraIP {
 				fila.setDisponible("No Disponible");
 				fila.setTipo(host.getTipo()+"");
 			}else {
+				if(subredes.size()>1 && (numSubred==1 || numSubred==subredes.size()) )
+				fila.setDisponible("No Disponible");
+			else
 				fila.setDisponible("Disponible");
 				fila.setTipo(host.getTipo()+" #"+nHost);
 				nHost++;
@@ -330,9 +333,9 @@ public class CalculadoraIP {
 //			System.out.println(tablaDirecciones.getSubred()+" - "+tablaDirecciones.getDireccion()+" - "+tablaDirecciones.getTipo()+" - "+tablaDirecciones.getDisponible());
 //		}
 //		
-////		System.out.println("Listar hosts en su subred:");
+//		System.out.println("Listar hosts en su subred:");
 //		
-////		ArrayList<TablaDirecciones> resul3 = cal.listarhostsEnSubred(1);
+//		ArrayList<TablaDirecciones> resul3 = cal.listarhostsEnSubred(3);
 //		for (TablaDirecciones tablaDirecciones2 : resul3) {
 //			System.out.println(tablaDirecciones2.getSubred()+" - "+tablaDirecciones2.getDireccion()+" - "+tablaDirecciones2.getTipo()+" - "+tablaDirecciones2.getDisponible());
 //		}
