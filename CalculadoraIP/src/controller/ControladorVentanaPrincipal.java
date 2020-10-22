@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Checkbox;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -30,19 +31,20 @@ public class ControladorVentanaPrincipal implements Initializable {
 	private Button btnCalcular;
 
 	@FXML
-	private TextField ipPrimer, ipSegundo, ipTercero, ipCuarto, maskPrimer, maskSegundo, maskTercero, maskCuarto,
+	private java.awt.TextField ipPrimer, ipSegundo, ipTercero, ipCuarto, maskPrimer, maskSegundo, maskTercero, maskCuarto,
 			numMascara, numBits, numSubredes, redPrimer, redSegundo, redTercero, redCuarto, broadPrimer, broadSegundo,
 			broadTercero, broadCuarto, buscarPrimer, buscarSegundo, buscarTercero, buscarCuarto, numBitsRed,
 			numBitsHost, numDireccionesHost, numBuscarSubred, numBuscarHost;
 
 	@FXML
-	private CheckBox checkSubredes, checkNumBits, checkNumSubredes, checkBuscarDireccion, checkBuscarSubred,
+	private Checkbox checkSubredes, checkNumBits, checkNumSubredes, checkBuscarDireccion, checkBuscarSubred,
 			checkBuscarNumSubred, checkBuscarNumHost;
 
 	@FXML
     private TableColumn<TablaDirecciones, String> subred,direccion,tipo,usable;
 	
 	private ObservableList<TablaDirecciones> arrayTabla= FXCollections.observableArrayList();
+	private ObservableList<TablaDirecciones> arrayTablaBusqueda= FXCollections.observableArrayList();
 	
 	private Direccion ip;
 	private Direccion mascara;
@@ -54,7 +56,21 @@ public class ControladorVentanaPrincipal implements Initializable {
 
 	@FXML
 	void buscar(ActionEvent event) {
-		
+		if(checkBuscarDireccion.isSelected()) {
+			String direccionTextField=buscarPrimer.getText()+buscarSegundo+buscarTercero+buscarCuarto;
+			String compare="";
+			for(int i=0; i<arrayTabla.size(); i++) {
+				
+				compare=arrayTabla.get(i).getDireccion();
+				
+				if(direccionTextField.equals(compare)) {
+					TablaDirecciones tablax = arrayTabla.get(i);
+					arrayTablaBusqueda.add(tablax);
+				}
+				
+			}
+			arrayTabla=FXCollections.observableArrayList(arrayTablaBusqueda);
+		}
 	}
 
 	@FXML
