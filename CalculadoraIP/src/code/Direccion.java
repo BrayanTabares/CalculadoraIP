@@ -260,6 +260,7 @@ public class Direccion {
 		String numeroS = binario.toString().replace(",", "");
 		numeroS = numeroS.replace(" ", "");
 		int numero = Integer.parseInt(numeroS.substring(1, numeroS.length()-1),2);
+		
 		return numero;
 	}
 

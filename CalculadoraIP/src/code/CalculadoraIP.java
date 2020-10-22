@@ -12,11 +12,12 @@ import java.util.ArrayList;
 public class CalculadoraIP {
 
 	
-	private Direccion red;
-	private Direccion broad;
-	private Direccion ip;
-	private Direccion mask;
-	private ArrayList<Direccion> host;
+	private static Direccion red;
+	private static Direccion broad;
+	private static Direccion ip;
+	private static Direccion mask;
+	private static ArrayList<Direccion> host;
+	private static ArrayList<ArrayList<Direccion>> subredes;
 	
 	public CalculadoraIP(Direccion ip, Direccion mask) {
 		this.ip = ip;
@@ -24,8 +25,17 @@ public class CalculadoraIP {
 		red = hallarRed(ip, mask);
 		broad = hallarBroadcast(ip, mask.getNumero());
 		host = hallarHost(ip, mask.getNumero());
+		
 	}
-	
+	public CalculadoraIP(Direccion ip, Direccion mask, int cantidadSubredes, boolean enBits) {
+		this.ip = ip;
+		this.mask = mask;
+		red = hallarRed(ip, mask);
+		broad = hallarBroadcast(ip, mask.getNumero());
+		host = hallarHost(ip, mask.getNumero());
+		subredes = hallarSubred(cantidadSubredes, enBits);
+			
+	}
 	
 	/**
 	 * Operacion and entre dos direcciones binarias instanciadas en dos ArrayList
@@ -170,16 +180,20 @@ public class CalculadoraIP {
 	 * @param num
 	 * @return
 	 */
-	public static ArrayList<ArrayList<Direccion>> hallarSubred(Direccion ip, int mask, int num) {
+	public static ArrayList<ArrayList<Direccion>> hallarSubred(int num, boolean enBits) {
+		int subred = 1;
+		if(enBits)
+			subred = (int) Math.ceil(Math.log10(num) / Math.log10(2));
+		else
+			subred = num;
 		ArrayList<ArrayList<Direccion>> host = new ArrayList<ArrayList<Direccion>>();
-		Direccion actual = hallarRed(ip, mask);
-		Direccion tope = hallarBroadcast(ip, mask);
-		int subred = (int) Math.ceil(Math.log10(num) / Math.log10(2));
-		if (subred <= 32 - mask) {
-			Direccion maskAux = new Direccion(mask);
+		Direccion actual = red;
+		Direccion tope = broad;
+		if (subred <= 32 - mask.getNumero()) {
+			Direccion maskAux = new Direccion(mask.getNumero());
 			for (int i = 0; i < Math.pow(2, subred); i++) {
 				ArrayList<Direccion> aux = new ArrayList<Direccion>();
-				Direccion topeLocal = actual.obtenerDireccionBinariaSiguiente(mask + subred);
+				Direccion topeLocal = actual.obtenerDireccionBinariaSiguiente(mask.getNumero() + subred);
 				while (!actual.equals(topeLocal)) {
 					aux.add(actual);
 					actual = actual.obtenerDireccionBinariaSiguiente();
@@ -256,19 +270,19 @@ public static void main(String[] args) {
 					.println(aux.getCadenaBinario() + " " + aux.getCadenaDecimal() + " " + identificarTipo(aux, mask));
 		}
 
-		System.out.println("\nSubredes :");
-		int i=1;
-		for (ArrayList<Direccion> aux1 : hallarSubred(bin2, mask, (int)Math.pow(2, bits))) {
-			System.out.println("Subred "+i);
-			for (Direccion aux : aux1) {
-				if(i==max) {
-					System.out.println(
-							aux.getCadenaBinario() + " " + aux.getCadenaDecimal() + " " + identificarTipo(aux, mask));
-				}
-				
-			}
-			i++;
-		}
+//		System.out.println("\nSubredes :");
+//		int i=1;
+//		for (ArrayList<Direccion> aux1 : hallarSubred(bin2, mask, (int)Math.pow(2, bits))) {
+//			System.out.println("Subred "+i);
+//			for (Direccion aux : aux1) {
+//				if(i==max) {
+//					System.out.println(
+//							aux.getCadenaBinario() + " " + aux.getCadenaDecimal() + " " + identificarTipo(aux, mask));
+//				}
+//				
+//			}
+//			i++;
+//		}
 	}
 
 }
