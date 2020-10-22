@@ -328,13 +328,15 @@
                                 </rowConstraints>
                                  <children>
                                     <TableView fx:id="tablaBusqueda" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                      <columns>
-                                        <TableColumn fx:id="subred" prefWidth="75.0" text="Subred" />
-                                        <TableColumn fx:id="direccion" prefWidth="267.0" text="Dirección" />
-                                          <TableColumn fx:id="tipo" prefWidth="74.0" text="Tipo" />
-                                          <TableColumn fx:id="usable" prefWidth="75.0" text="¿Usable?" />
-                                      </columns>
-                                    </TableView>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                       <columns>
+                                          <TableColumn fx:id="subred" prefWidth="75.0" text="Subred" />
+                                          <TableColumn fx:id="direccion" prefWidth="75.0" text="Direccion" />
+                                          <TableColumn fx:id="tipo" prefWidth="75.0" text="Tipo" />
+                                          <TableColumn fx:id="usable" prefWidth="75.0" text="¿Disponible?" />
+                                       </columns></TableView>
                                     <GridPane GridPane.columnIndex="1">
                                        <children>
                                           <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
