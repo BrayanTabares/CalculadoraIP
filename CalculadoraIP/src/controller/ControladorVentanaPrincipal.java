@@ -36,11 +36,11 @@ public class ControladorVentanaPrincipal implements Initializable {
 	private TextField ipPrimer, ipSegundo, ipTercero, ipCuarto, maskPrimer, maskSegundo, maskTercero, maskCuarto,
 			numMascara, numBits, numSubredes, redPrimer, redSegundo, redTercero, redCuarto, broadPrimer, broadSegundo,
 			broadTercero, broadCuarto, buscarPrimer, buscarSegundo, buscarTercero, buscarCuarto, numBitsRed,
-			numBitsHost, numDireccionesHost, numBuscarSubred, numBuscarHost, numSubredUtil, numHostUtil;
+			numBitsHost, numDireccionesHost, numBuscarSubred, numBuscarHost, numSubredUtil, numHostUtil, numBuscarNHost;
 
 	@FXML
 	private CheckBox checkSubredes, checkNumBits, checkNumSubredes, checkBuscarDireccion, checkBuscarSubred,
-			checkBuscarNumSubred, checkBuscarNumHost;
+			checkBuscarNumSubred, checkBuscarNumHost, checkBuscarNHost;
 
 	@FXML
 	private TableColumn<TablaDirecciones, String> subred, direccion, tipo, usable;
@@ -72,8 +72,9 @@ public class ControladorVentanaPrincipal implements Initializable {
 			if (checkSubredes.isSelected()) {
 				if (checkNumSubredes.isSelected()) {
 					cantidadSubredes = Integer.parseInt(numSubredes.getText());
+					cantidadSubredes=(int)Math.pow(2,(int) Math.ceil(Math.log10(cantidadSubredes) / Math.log10(2)));
 				} else {
-					cantidadSubredes = Integer.parseInt(numBits.getText());
+					cantidadSubredes = Integer.parseInt(numBits.getText());					
 					enBits = true;
 				}
 			}
@@ -191,7 +192,14 @@ public class ControladorVentanaPrincipal implements Initializable {
 			}else if(checkBuscarNumSubred.isSelected()) {	
 				try {
 					int subred=Integer.parseInt(numBuscarSubred.getText());
-					tablaDirecciones=CalculadoraIP.listarhostsEnSubred(subred);
+					
+					if(checkBuscarNHost.isSelected()) {
+						int cant=Integer.parseInt(numBuscarNHost.getText());
+						tablaDirecciones=new ArrayList<TablaDirecciones>(CalculadoraIP.listarhostsEnSubred(subred).subList(0, cant));
+						
+					}else {
+						tablaDirecciones=CalculadoraIP.listarhostsEnSubred(subred);
+					}
 					
 					tablaBusqueda.getItems().clear();
 					tablaBusqueda.getItems().addAll(tablaDirecciones);
@@ -340,6 +348,8 @@ public class ControladorVentanaPrincipal implements Initializable {
 		// ipPrimer.addEventFilter(KeyEvent.ANY, event -> { eventoTextField(ipPrimer,
 		// 255, event);});
 
+		numBuscarNHost.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0, integerFilter));
+		
 		/**
 		 * Pestaña Tablas
 		 */
@@ -439,6 +449,7 @@ public class ControladorVentanaPrincipal implements Initializable {
 	void switchBuscar1(ActionEvent event) {
 		numBuscarHost.setDisable(true);
 		numBuscarSubred.setDisable(true);
+		numBuscarNHost.setDisable(true);
 		buscarPrimer.setDisable(false);
 		buscarSegundo.setDisable(false);
 		buscarTercero.setDisable(false);
@@ -447,6 +458,7 @@ public class ControladorVentanaPrincipal implements Initializable {
 		checkBuscarDireccion.setSelected(true);
 		checkBuscarNumHost.setDisable(true);
 		checkBuscarNumSubred.setDisable(true);
+		checkBuscarNHost.setDisable(true);
 
 	}
 
@@ -462,8 +474,10 @@ public class ControladorVentanaPrincipal implements Initializable {
 		checkBuscarDireccion.setSelected(false);
 		checkBuscarNumHost.setDisable(false);
 		checkBuscarNumSubred.setDisable(false);
+		switchBuscar5(null);
 		switchBuscar3(null);
 		switchBuscar4(null);
+		
 
 	}
 
@@ -471,8 +485,12 @@ public class ControladorVentanaPrincipal implements Initializable {
 	void switchBuscar3(ActionEvent event) {
 		if (!checkBuscarNumSubred.isSelected()) {
 			numBuscarSubred.setDisable(true);
+			checkBuscarNHost.setDisable(true);
+			numBuscarNHost.setDisable(true);
 		} else {
 			numBuscarSubred.setDisable(false);
+			checkBuscarNHost.setDisable(false);
+			switchBuscar5(null);
 		}
 	}
 
@@ -482,6 +500,25 @@ public class ControladorVentanaPrincipal implements Initializable {
 			numBuscarHost.setDisable(true);
 		} else {
 			numBuscarHost.setDisable(false);
+			if(checkBuscarNumSubred.isSelected()) {
+				checkBuscarNHost.setSelected(false);
+				switchBuscar5(null);
+			}else {
+				
+			}
+		}
+	}
+	
+	@FXML
+	void switchBuscar5(ActionEvent event) {
+		if (!checkBuscarNHost.isSelected()) {
+			numBuscarNHost.setDisable(true);
+		} else {
+			numBuscarNHost.setDisable(false);
+			if(checkBuscarNumHost.isSelected()) {
+				checkBuscarNumHost.setSelected(false);
+				switchBuscar4(null);
+			}
 		}
 	}
 
