@@ -36,7 +36,7 @@ public class ControladorVentanaPrincipal implements Initializable {
 	private TextField ipPrimer, ipSegundo, ipTercero, ipCuarto, maskPrimer, maskSegundo, maskTercero, maskCuarto,
 			numMascara, numBits, numSubredes, redPrimer, redSegundo, redTercero, redCuarto, broadPrimer, broadSegundo,
 			broadTercero, broadCuarto, buscarPrimer, buscarSegundo, buscarTercero, buscarCuarto, numBitsRed,
-			numBitsHost, numDireccionesHost, numBuscarSubred, numBuscarHost;
+			numBitsHost, numDireccionesHost, numBuscarSubred, numBuscarHost, numSubredUtil, numHostUtil;
 
 	@FXML
 	private CheckBox checkSubredes, checkNumBits, checkNumSubredes, checkBuscarDireccion, checkBuscarSubred,
@@ -66,7 +66,7 @@ public class ControladorVentanaPrincipal implements Initializable {
 
 			int mask = Integer.parseInt(numMascara.getText());
 
-			int cantidadSubredes = 0;
+			int cantidadSubredes = 1;
 			boolean enBits = false;
 
 			if (checkSubredes.isSelected()) {
@@ -99,8 +99,32 @@ public class ControladorVentanaPrincipal implements Initializable {
 
 			numBitsRed.setText(mask + "");
 
-			numBitsHost.setText(32 - mask + "");
-
+			
+			
+			if(checkSubredes.isSelected()) {
+				try {
+					int aux1=Integer.parseInt(numBits.getText());
+					int aux=(int)Math.pow(2,aux1);
+					numSubredes.setText(aux+"");
+					if(aux>=2) {
+						numSubredUtil.setText(aux-2+"");
+						numHostUtil.setText(((int)Math.pow(2, 32-(mask+aux1)))*(aux-2)-(2*(aux-2)) + "");
+					}else {
+						numSubredUtil.setText(1+"");
+						numHostUtil.setText(((int)Math.pow(2, 32-(mask+aux1))-2)+ "");
+					}
+					numDireccionesHost.setText(((int)Math.pow(2, 32-(mask+aux1))-2)*aux + "");
+					numBitsHost.setText(32 - (mask+aux1) + "");
+				}catch(Exception ex) {
+					
+				}
+			}else {
+				numSubredUtil.setText(1+"");
+				numHostUtil.setText(((int)Math.pow(2, 32-(mask))-2)+ "");
+				numDireccionesHost.setText(((int)Math.pow(2, 32-(mask))-2)+ "");
+				numBitsHost.setText(32 - mask + "");
+			}
+			
 			new CalculadoraIP(ip, mascara, cantidadSubredes, enBits);
 
 			tablaDirecciones = CalculadoraIP.generarDirecciones();
@@ -211,12 +235,32 @@ public class ControladorVentanaPrincipal implements Initializable {
 		});
 
 		numSubredes.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0, integerFilter));
-		// ipPrimer.addEventFilter(KeyEvent.ANY, event -> { eventoTextField(numSubredes,
-		// 255, event);});
+		numSubredes.addEventFilter(KeyEvent.ANY, event -> {
+			// eventoTextField(numSubredes,255, event);
+			if (numSubredes.getText().length() > 0) {
+				try {
+					int aux = Integer.parseInt(numSubredes.getText());
+					if(aux!=0) {
+						numBits.setText((int) Math.ceil(Math.log10(aux) / Math.log10(2)) + "");
+					}			
+				} catch (Exception exp) {
+
+				}
+			}
+		});
 
 		numBits.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0, integerFilter));
-		// ipPrimer.addEventFilter(KeyEvent.ANY, event -> { eventoTextField(ipPrimer,
-		// 255, event);});
+		numBits.addEventFilter(KeyEvent.ANY, event -> {
+			// eventoTextField(numSubredes,255, event);
+			if (numBits.getText().length() > 0) {
+				try {
+					int aux = Integer.parseInt(numBits.getText());
+					numSubredes.setText((int) Math.pow(2, aux) + "");
+				} catch (Exception exp) {
+
+				}
+			}
+		});
 
 		numBuscarSubred.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0, integerFilter));
 		// ipPrimer.addEventFilter(KeyEvent.ANY, event -> { eventoTextField(numSubredes,
@@ -260,12 +304,13 @@ public class ControladorVentanaPrincipal implements Initializable {
 		tipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
 		usable.setCellValueFactory(new PropertyValueFactory<>("disponible"));
 
-		//tablaBusqueda.getColumns().addAll(subred, direccion, tipo, usable);
-		
-		//TablaDirecciones aux= new TablaDirecciones("sumadre", "lasuya", "si", "me la pela");
-		
+		// tablaBusqueda.getColumns().addAll(subred, direccion, tipo, usable);
+
+		// TablaDirecciones aux= new TablaDirecciones("sumadre", "lasuya", "si", "me la
+		// pela");
+
 		tablaBusqueda.setItems(arrayTabla);
-	//	tablaBusqueda.getItems().add(aux);
+		// tablaBusqueda.getItems().add(aux);
 
 	}
 
