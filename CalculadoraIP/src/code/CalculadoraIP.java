@@ -178,30 +178,37 @@ public class CalculadoraIP {
 	 */
 	public static ArrayList<ArrayList<Direccion>> hallarSubred(int num, boolean enBits) {
 		int subred = 1;
-		
 		if(!enBits)
 			subred = (int) Math.ceil(Math.log10(num) / Math.log10(2));
-		else
+		else {
 			subred = num;
+			num = (int) Math.pow(2, num);
+		}
 		
 		ArrayList<ArrayList<Direccion>> host = new ArrayList<ArrayList<Direccion>>();
 		Direccion actual = red;
 		Direccion tope = broad;
 		if (subred <= 32 - mask.getNumero()) {
 			Direccion maskAux = new Direccion(mask.getNumero());
-			for (int i = 0; i < Math.pow(2, subred); i++) {
+			for (int i = 0; i < num; i++) {
 				ArrayList<Direccion> aux = new ArrayList<Direccion>();
 				Direccion topeLocal = actual.obtenerDireccionBinariaSiguiente(mask.getNumero() + subred);
 				actual.setTipo(Tipo.RED);
+				actual.setDisponible("No disponible");
 				aux.add(actual);
 				actual = actual.obtenerDireccionBinariaSiguiente();
 				while (!actual.equals(topeLocal)) {
+					if(num>1 && (i == 0 || i == num-1))
+						actual.setDisponible("No disponible");
+					else
+						actual.setDisponible("Disponible");
 					actual.setTipo(Tipo.HOST);
 					aux.add(actual);
 					actual = actual.obtenerDireccionBinariaSiguiente();
 				}
 				Direccion auxiliar = aux.get(aux.size()-1);
 				auxiliar.setTipo(Tipo.BROADCAST);
+				auxiliar.setDisponible("No disponible");
 				aux.set(aux.size()-1, auxiliar);
 				host.add(aux);
 				
@@ -222,15 +229,10 @@ public class CalculadoraIP {
 				TablaDirecciones fila = new TablaDirecciones();
 				fila.setSubred((i+1)+"");
 				fila.setDireccion(host.toString());
-				
+				fila.setDisponible(host.getDisponible());
 				if(host.getTipo() != Tipo.HOST) {
-					fila.setDisponible("No Disponible");
 					fila.setTipo(host.getTipo()+"");
 				}else {
-					if(subredes.size()>1 && (i==0 || i==subredes.size()-1) )
-						fila.setDisponible("No Disponible");
-					else
-						fila.setDisponible("Disponible");
 					fila.setTipo(host.getTipo()+" #"+nHost);
 					nHost++;
 				}
@@ -249,7 +251,7 @@ public class CalculadoraIP {
 	 */
 	public static ArrayList<TablaDirecciones> buscarHostEnSubred(int numSubred, int numHost){
 		Direccion host = subredes.get(numSubred-1).get(numHost);
-		TablaDirecciones resul = new TablaDirecciones(numSubred+"", host.toString(), host.getTipo()+" #"+numHost, "Disponible");
+		TablaDirecciones resul = new TablaDirecciones(numSubred+"", host.toString(), host.getTipo()+" #"+numHost, host.getDisponible());
 		return new ArrayList<TablaDirecciones>(Arrays.asList(resul));
 	}
 	/**
@@ -261,8 +263,26 @@ public class CalculadoraIP {
 		ArrayList<TablaDirecciones> tabla = new ArrayList<TablaDirecciones>();
 		for (int i=0; i<subredes.size(); i++) {
 			Direccion host = subredes.get(i).get(numHost);
-			TablaDirecciones resul = new TablaDirecciones((i+1)+"", host.toString(), host.getTipo()+" #"+numHost, "Disponible");
+			TablaDirecciones resul = new TablaDirecciones((i+1)+"", host.toString(), host.getTipo()+" #"+numHost, host.getDisponible());
 			tabla.add(resul);
+		}
+			
+		return tabla;
+	}
+	/**
+	 * Se busca un host en todas las subredes disponibles con una ip decimal
+	 * @param direccionIP
+	 * @return
+	 */
+	public static ArrayList<TablaDirecciones> buscarHost(ArrayList<Integer> direccionIP){
+		ArrayList<TablaDirecciones> tabla = new ArrayList<TablaDirecciones>();
+		for (int i=0; i<subredes.size(); i++) {
+			int numHost = subredes.get(i).indexOf(new Direccion(direccionIP, true));
+			 	if(numHost!=-1){
+			 		Direccion host =subredes.get(i).get(numHost);
+					TablaDirecciones resul = new TablaDirecciones((i+1)+"", host.toString(), host.getTipo()+" #"+numHost, host.getDisponible());
+					tabla.add(resul);
+			 	}
 		}
 			
 		return tabla;
@@ -279,19 +299,15 @@ public class CalculadoraIP {
 			TablaDirecciones fila = new TablaDirecciones();
 			fila.setSubred((numSubred)+"");
 			fila.setDireccion(host.toString());
+			fila.setDisponible(host.getDisponible());
 			
 			if(host.getTipo() != Tipo.HOST) {
-				fila.setDisponible("No Disponible");
 				fila.setTipo(host.getTipo()+"");
 			}else {
-				if(subredes.size()>1 && (numSubred==1 || numSubred==subredes.size()) )
-				fila.setDisponible("No Disponible");
-			else
-				fila.setDisponible("Disponible");
 				fila.setTipo(host.getTipo()+" #"+nHost);
 				nHost++;
 			}
-				
+
 			tabla.add(fila);
 			
 		}
@@ -320,6 +336,11 @@ public class CalculadoraIP {
 		for (TablaDirecciones fila : k) {
 			System.out.println(fila.getSubred()+" - "+fila.getDireccion()+" - "+fila.getTipo()+" - "+fila.getDisponible());
 		}
+		
+		System.out.println("Búsqueda por ip host:");
+		ArrayList<TablaDirecciones> busqueda = cal.buscarHost(new ArrayList<Integer>(Arrays.asList(172,23,103,188)));
+		System.out.println(busqueda.get(0).getSubred()+" - "+busqueda.get(0).getDireccion()+" - "+busqueda.get(0).getTipo()+" - "+busqueda.get(0).getDisponible());
+//		4 - 172.23.103.188 - HOST #444 - No Disponible
 		
 ////		System.out.println("Búsqueda por host y subred:");
 //		
