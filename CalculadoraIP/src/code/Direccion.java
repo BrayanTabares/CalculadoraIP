@@ -18,11 +18,13 @@ public class Direccion {
 	String cadenaBinario;
 	String cadenaDecimal;
 	private Tipo tipo;
+	private String disponible;
 
 	/**
 	 * @param direccion
 	 * @param decimal
 	 */
+	
 	public Direccion(ArrayList<Integer> direccion, boolean decimal) {
 		super();
 		if (decimal) {
@@ -94,6 +96,14 @@ public class Direccion {
 
 	public Tipo getTipo() {
 		return tipo;
+	}
+
+	public String getDisponible() {
+		return disponible;
+	}
+
+	public void setDisponible(String disponible) {
+		this.disponible = disponible;
 	}
 
 	public void setTipo(Tipo tipo) {
@@ -380,7 +390,6 @@ public class Direccion {
 
 	public Direccion sumarADireccionDecimal(Direccion dir, int suma) {
 		ArrayList<Integer> dec = dir.decimal;
-		boolean completada = false;
 		int aux = 0, pos = 3;
 		do{
 			suma = dec.get(pos)+suma;
