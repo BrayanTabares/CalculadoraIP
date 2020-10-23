@@ -156,7 +156,7 @@ public class ControladorVentanaPrincipal implements Initializable {
 				int tercero = Integer.parseInt(buscarTercero.getText());
 				int cuarto = Integer.parseInt(buscarCuarto.getText());
 
-				tablaDirecciones = CalculadoraIP.generarDirecciones();
+				tablaDirecciones = CalculadoraIP.buscarHost(new Direccion(primero, segundo, tercero, cuarto).getDecimal());
 
 				tablaBusqueda.getItems().clear();
 				tablaBusqueda.getItems().addAll(tablaDirecciones);
