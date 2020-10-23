@@ -99,8 +99,6 @@ public class ControladorVentanaPrincipal implements Initializable {
 
 			numBitsRed.setText(mask + "");
 
-			
-			
 			if(checkSubredes.isSelected()) {
 				try {
 					int aux1=Integer.parseInt(numBits.getText());
@@ -152,25 +150,90 @@ public class ControladorVentanaPrincipal implements Initializable {
 	@FXML
 	void buscar(ActionEvent event) {
 		if (checkBuscarDireccion.isSelected()) {
-			String direccionTextField = buscarPrimer.getText() + buscarSegundo + buscarTercero + buscarCuarto;
-			String compare = "";
-			for (int i = 0; i < arrayTabla.size(); i++) {
+			try {
+				int primero = Integer.parseInt(buscarPrimer.getText());
+				int segundo = Integer.parseInt(buscarSegundo.getText());
+				int tercero = Integer.parseInt(buscarTercero.getText());
+				int cuarto = Integer.parseInt(buscarCuarto.getText());
 
-				compare = arrayTabla.get(i).getDireccion();
+				tablaDirecciones = CalculadoraIP.generarDirecciones();
 
-				if (direccionTextField.equals(compare)) {
-					TablaDirecciones tablax = arrayTabla.get(i);
-					arrayTablaBusqueda.add(tablax);
-				}
-
+				tablaBusqueda.getItems().clear();
+				tablaBusqueda.getItems().addAll(tablaDirecciones);
+				tablaBusqueda.refresh();
+				
+			}catch(Exception ex) {
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("Error");
+				alert.setHeaderText("error");
+				alert.setContentText("Ocurrió al obtener la ip de búsqueda");
+				alert.show();
 			}
-			arrayTabla = FXCollections.observableArrayList(arrayTablaBusqueda);
+		}else {
+			if(checkBuscarNumHost.isSelected()&&checkBuscarNumSubred.isSelected()) {
+				try {
+					int subred=Integer.parseInt(numBuscarSubred.getText());
+					int host=Integer.parseInt(numBuscarHost.getText());
+					tablaDirecciones=CalculadoraIP.buscarHostEnSubred(subred, host);
+					
+					tablaBusqueda.getItems().clear();
+					tablaBusqueda.getItems().addAll(tablaDirecciones);
+					tablaBusqueda.refresh();
+					
+				}catch(Exception ex) {
+					Alert alert = new Alert(AlertType.WARNING);
+					alert.setTitle("Error");
+					alert.setHeaderText("error");
+					alert.setContentText("Ocurrió un error al obtener el host en la subred específica");
+					alert.show();
+				}
+				
+			}else if(checkBuscarNumSubred.isSelected()) {	
+				try {
+					int subred=Integer.parseInt(numBuscarSubred.getText());
+					tablaDirecciones=CalculadoraIP.listarhostsEnSubred(subred);
+					
+					tablaBusqueda.getItems().clear();
+					tablaBusqueda.getItems().addAll(tablaDirecciones);
+					tablaBusqueda.refresh();
+					
+				}catch(Exception ex) {
+					Alert alert = new Alert(AlertType.WARNING);
+					alert.setTitle("Error");
+					alert.setHeaderText("error");
+					alert.setContentText("Ocurrió un error al obtener el numero de subred");
+					alert.show();
+				}
+				
+			}else if(checkBuscarNumHost.isSelected()) {
+				try {
+					int host=Integer.parseInt(numBuscarHost.getText());
+					tablaDirecciones=CalculadoraIP.buscarHost(host);
+					
+					tablaBusqueda.getItems().clear();
+					tablaBusqueda.getItems().addAll(tablaDirecciones);
+					tablaBusqueda.refresh();
+					
+				}catch(Exception ex) {
+					Alert alert = new Alert(AlertType.WARNING);
+					alert.setTitle("Error");
+					alert.setHeaderText("error");
+					alert.setContentText("Ocurrió un error al obtener el número de host");
+					alert.show();
+				}
+			}else {
+				limpiar(null);
+			}
 		}
 	}
 
 	@FXML
 	void limpiar(ActionEvent event) {
-
+		tablaDirecciones = CalculadoraIP.generarDirecciones();
+		
+		tablaBusqueda.getItems().clear();
+		tablaBusqueda.getItems().addAll(tablaDirecciones);
+		tablaBusqueda.refresh();
 	}
 
 	@SuppressWarnings("unchecked")
