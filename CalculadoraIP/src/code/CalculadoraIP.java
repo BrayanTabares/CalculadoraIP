@@ -185,7 +185,7 @@ public class CalculadoraIP {
 			subred = num;
 		
 		ArrayList<ArrayList<Direccion>> host = new ArrayList<ArrayList<Direccion>>();
-		Direccion actual = ip;
+		Direccion actual = red;
 		Direccion tope = broad;
 		if (subred <= 32 - mask.getNumero()) {
 			Direccion maskAux = new Direccion(mask.getNumero());

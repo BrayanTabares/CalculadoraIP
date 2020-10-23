@@ -105,6 +105,13 @@ public class ControladorVentanaPrincipal implements Initializable {
 				try {
 					int aux1=Integer.parseInt(numBits.getText());
 					int aux=(int)Math.pow(2,aux1);
+					if(aux1+mask>=32) {
+						Alert alert = new Alert(AlertType.WARNING);
+						alert.setTitle("Error");
+						alert.setHeaderText("error");
+						alert.setContentText("La configuración de subredes es inválida");
+						alert.show();
+					}
 					numSubredes.setText(aux+"");
 					if(aux>=2) {
 						numSubredUtil.setText(aux-2+"");
@@ -251,7 +258,7 @@ public class ControladorVentanaPrincipal implements Initializable {
 
 		numBits.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0, integerFilter));
 		numBits.addEventFilter(KeyEvent.ANY, event -> {
-			// eventoTextField(numSubredes,255, event);
+			eventoTextField(numBits,32,0, event);
 			if (numBits.getText().length() > 0) {
 				try {
 					int aux = Integer.parseInt(numBits.getText());
