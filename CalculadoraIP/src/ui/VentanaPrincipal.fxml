@@ -214,16 +214,16 @@
                                           <Label text="Dirección de la red" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                           <GridPane GridPane.columnIndex="1" GridPane.rowIndex="7">
                                              <children>
-                                                <Label text="Número de bits para identificar host" />
+                                                <Label text="# de bits para identificar host" />
                                                 <TextField fx:id="numBitsHost" editable="false" prefHeight="25.0" prefWidth="51.0" promptText="32" GridPane.columnIndex="1" />
-                                                <Label text="Número de host útiles" GridPane.columnIndex="3" />
+                                                <Label text="# de host útiles" GridPane.columnIndex="3" />
                                                 <TextField fx:id="numHostUtil" editable="false" prefHeight="25.0" prefWidth="51.0" promptText="32" GridPane.columnIndex="4" />
                                              </children>
                                              <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.0" minWidth="10.0" prefWidth="200.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.0" minWidth="-Infinity" prefWidth="200.0" />
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="29.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.0" minWidth="10.0" prefWidth="200.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.0" minWidth="-Infinity" prefWidth="200.0" />
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
                                              </columnConstraints>
                                              <rowConstraints>
@@ -263,16 +263,16 @@
                                           </GridPane>
                                           <GridPane GridPane.columnIndex="1" GridPane.rowIndex="6">
                                              <children>
-                                                <Label text="Número de bits para identificar red" />
+                                                <Label text="# de bits para identificar red" />
                                                 <TextField fx:id="numBitsRed" editable="false" prefHeight="25.0" prefWidth="51.0" promptText="32" GridPane.columnIndex="1" />
-                                                <Label text="Número de subredes útiles" GridPane.columnIndex="3" />
+                                                <Label text="# de subredes útiles" GridPane.columnIndex="3" />
                                                 <TextField fx:id="numSubredUtil" editable="false" prefHeight="25.0" prefWidth="51.0" promptText="32" GridPane.columnIndex="4" />
                                              </children>
                                              <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.0" minWidth="10.0" prefWidth="200.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="29.0" />
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.0" minWidth="-Infinity" prefWidth="200.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="20.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.0" minWidth="-Infinity" prefWidth="210.0" />
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
                                              </columnConstraints>
                                              <rowConstraints>
@@ -281,11 +281,11 @@
                                           </GridPane>
                                           <GridPane GridPane.columnIndex="1" GridPane.rowIndex="8">
                                              <children>
-                                                <Label text="Número de direcciones para host" />
+                                                <Label text="# de direcciones para host" />
                                                 <TextField fx:id="numDireccionesHost" editable="false" prefHeight="25.0" prefWidth="51.0" promptText="32" GridPane.columnIndex="1" />
                                              </children>
                                              <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.0" minWidth="10.0" prefWidth="200.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.0" minWidth="-Infinity" prefWidth="200.0" />
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.0" minWidth="-Infinity" prefWidth="29.0" />
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="189.0" minWidth="10.0" prefWidth="200.0" />
