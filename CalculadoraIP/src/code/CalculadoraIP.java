@@ -5,7 +5,6 @@ package code;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 
 import ui.TablaDirecciones;
 
@@ -18,11 +17,14 @@ public class CalculadoraIP {
 	
 	private static Direccion red;
 	private static Direccion broad;
+	@SuppressWarnings("unused")
 	private static Direccion ip;
 	private static Direccion mask;
+	@SuppressWarnings("unused")
 	private static ArrayList<Direccion> host;
 	private static ArrayList<ArrayList<Direccion>> subredes;
 	
+	@SuppressWarnings("static-access")
 	public CalculadoraIP(Direccion ip, Direccion mask, int cantidadSubredes, boolean enBits) {
 		this.ip = ip;
 		this.mask = mask;
@@ -187,9 +189,9 @@ public class CalculadoraIP {
 		
 		ArrayList<ArrayList<Direccion>> host = new ArrayList<ArrayList<Direccion>>();
 		Direccion actual = red;
-		Direccion tope = broad;
+		//Direccion tope = broad;
 		if (subred <= 32 - mask.getNumero()) {
-			Direccion maskAux = new Direccion(mask.getNumero());
+			//Direccion maskAux = new Direccion(mask.getNumero());
 			for (int i = 0; i < num; i++) {
 				ArrayList<Direccion> aux = new ArrayList<Direccion>();
 				Direccion topeLocal = actual.obtenerDireccionBinariaSiguiente(mask.getNumero() + subred);
@@ -317,29 +319,29 @@ public class CalculadoraIP {
 	
 	public static void main(String[] args) {
 		
-		/**
-		 * ip
-		 */
-		Direccion bin2 = new Direccion(172, 23, 96, 0);
-		/**
-		 * Macara
-		 */
-		Direccion mask = new Direccion(21);
-		
-		/**
-		 * Cantidad de bits que usa la subred
-		 */
-		int bits=4;
-		
-		CalculadoraIP cal = new CalculadoraIP(bin2, mask, bits, false);
-		ArrayList<TablaDirecciones> k = cal.generarDirecciones();
-		for (TablaDirecciones fila : k) {
-			System.out.println(fila.getSubred()+" - "+fila.getDireccion()+" - "+fila.getTipo()+" - "+fila.getDisponible());
-		}
-		
-		System.out.println("Búsqueda por ip host:");
-		ArrayList<TablaDirecciones> busqueda = cal.buscarHost(new ArrayList<Integer>(Arrays.asList(172,23,103,188)));
-		System.out.println(busqueda.get(0).getSubred()+" - "+busqueda.get(0).getDireccion()+" - "+busqueda.get(0).getTipo()+" - "+busqueda.get(0).getDisponible());
+//		/**
+//		 * ip
+//		 */
+//		Direccion bin2 = new Direccion(172, 23, 96, 0);
+//		/**
+//		 * Macara
+//		 */
+//		Direccion mask = new Direccion(21);
+//		
+//		/**
+//		 * Cantidad de bits que usa la subred
+//		 */
+//		int bits=4;
+//		
+//		CalculadoraIP cal = new CalculadoraIP(bin2, mask, bits, false);
+//		ArrayList<TablaDirecciones> k = cal.generarDirecciones();
+//		for (TablaDirecciones fila : k) {
+//			System.out.println(fila.getSubred()+" - "+fila.getDireccion()+" - "+fila.getTipo()+" - "+fila.getDisponible());
+//		}
+//		
+//		System.out.println("Búsqueda por ip host:");
+//		ArrayList<TablaDirecciones> busqueda = cal.buscarHost(new ArrayList<Integer>(Arrays.asList(172,23,103,188)));
+//		System.out.println(busqueda.get(0).getSubred()+" - "+busqueda.get(0).getDireccion()+" - "+busqueda.get(0).getTipo()+" - "+busqueda.get(0).getDisponible());
 //		4 - 172.23.103.188 - HOST #444 - No Disponible
 		
 ////		System.out.println("Búsqueda por host y subred:");

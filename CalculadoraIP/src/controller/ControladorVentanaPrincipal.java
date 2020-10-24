@@ -22,7 +22,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.converter.IntegerStringConverter;
 import ui.TablaDirecciones;
@@ -49,12 +48,10 @@ public class ControladorVentanaPrincipal implements Initializable {
 	private TableView<TablaDirecciones> tablaBusqueda;
 
 	private ObservableList<TablaDirecciones> arrayTabla = FXCollections.observableArrayList();
-	private ObservableList<TablaDirecciones> arrayTablaBusqueda = FXCollections.observableArrayList();
 	private ArrayList<TablaDirecciones> tablaDirecciones = new ArrayList<TablaDirecciones>();
 
 	private Direccion ip;
 	private Direccion mascara;
-	private CalculadoraIP calculadora;
 
 	@FXML
 	void calcularIP(ActionEvent event) {
@@ -244,7 +241,6 @@ public class ControladorVentanaPrincipal implements Initializable {
 		tablaBusqueda.refresh();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
